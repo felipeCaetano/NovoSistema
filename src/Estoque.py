@@ -29,6 +29,7 @@ class Estoque(object):
         categoria = Categoria(codigo, nome, descrição)
         if categoria not in self.categorias:
             self.categorias.append(categoria)
+            print("Categoria Adicionada com sucesso!")
 
     def create_subcategoria(self):
         """"
@@ -57,6 +58,7 @@ class Estoque(object):
 
         if subcategoria not in self.subcategorias:
             self.subcategorias.append(subcategoria)
+            print("Subcategoria Adicionada com sucesso!")
 
     def create_produto(self):
         """"
@@ -76,25 +78,25 @@ class Estoque(object):
             escolhe = input("SUBCATEGORIA (Nome ou Código): ").lower()
             codigo = input("CÓDIGO: ").strip()
             nome = input("NOME: ").strip()
-            descrição = input("DESCRIÇÃO: ").strip()
+            descricao = input("DESCRIÇÃO: ").strip()
 
             estoquemax = input("Quantidade Maxima em Estoque: ")
-            while not produtos.valida_estoque(estoquemax):
+            while not Produtos.valida_estoque(estoquemax):
                 print("Valor Inválido!")
                 estoquemax = input("Valor deve ser Numérico: ")
 
             estoquemin = input("Quantidade Minima em Estoque: ")
-            while not produtos.valida_estoque(estoquemin):
+            while not Produtos.valida_estoque(estoquemin):
                 print("Valor Inválido!")
                 estoquemin = input("Valor deve ser Numérico: ")
 
             valorvenda = input("Preço Unitário: ")
-            while not produtos.valida_valorvenda(valorvenda):
+            while not Produtos.valida_valorvenda(valorvenda):
                 print("Valor Inválido!")
                 estoquemax = input("Valor deve ser Numérico: ")
 
             valorcompra = input("Valor de Compra: ")
-            while not produtos.valida_valorvenda(valorcompra):
+            while not Produtos.valida_valorvenda(valorcompra):
                 print("Valor Inválido!")
                 estoquemax = input("Valor deve ser Numérico: ")
 
@@ -118,6 +120,7 @@ class Estoque(object):
 
         if produto not in self.produtos:
             self.produtos.append(produto)
+            print("Produto Adicionado com sucesso!")
 
     # funcionalidade pedida na especificação
 
@@ -125,26 +128,40 @@ class Estoque(object):
         pass
 
     def consulta_estoque(self):    # exibe itens disponiveis no estoque
-        print("Exibindo estoque")
+        """"
+        Metodo Consulta_estoque: Exibe na tela os itens que estão registrados
+        Retorna se houver:
+            >Lista de Categorias Registradas
+            >Lista de Subcategorias Registradas
+            >Lista de Produtos Registrados
+        """
+        print("Exibindo Estoque\n")
         if not len(self.categorias):
             print("Não há Categorias Registradas!\n")
         else:
             for categoria in self.categorias:
-                if (categoria[len(self.categorias)-1]):
+                if categoria == self.categorias[len(self.categorias)-1]:
                     print(categoria)
                 else:
                     print(categoria, end=" ")
+
         if not len(self.subcategorias):
             print("Não há Subcategorias Registradas!\n")
         else:
             for subcategoria in self.subcategorias:
+                if subcategoria == self.subcategorias[len(self.subcategorias)-1]:
+                    print(subcategoria)
+                else:
+                    print(subcategoria, end=" ")
 
-                print(subcategoria, end=" ")
         if not len(self.produtos):
             print("Não há Produtos Registrados!\n")
         else:
             for produto in self.produtos:
-                print(produto, end=" ")
+                if produto == self.produtos[len(self.subcategorias)-1]:
+                    print(produto)
+                else:
+                    print(produto, end=" ")
 
         self.menu_estoque()
 
@@ -170,7 +187,7 @@ class Estoque(object):
             elif opcao == '2':
                 self.create_subcategoria()
             elif opcao == '3':
-                pass
+                self.create_produto()
             elif opcao == '4':
                 break
         self.menu_estoque()

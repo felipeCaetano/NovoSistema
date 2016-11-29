@@ -172,7 +172,7 @@ class Produtos:
             return False
         if not value.isdigit():
             return False
-        elif value <= 0:
+        elif int(value) <= 0:
             return False
         else:
             try:

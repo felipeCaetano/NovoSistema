@@ -102,7 +102,7 @@ class Estoque(object):
 
             foto = input("Arquivo de foto: ")
 
-            subcategoria = 0
+        subcategoria = 0
 
         for scat in self.subcategorias:
             if scat.nome.lower() == escolhe or scat.codigo == escolhe:

@@ -57,8 +57,13 @@ class Subcategoria(Categoria):
         self.descricao = descricao
 
 
-class Produtos:
-    def __init__(self, subcategoria, codigo, nome, descricao, estoquemax, estoquemin, valorvenda, valorcompra, foto):
+class Produtos(object):
+    """
+    Classe Produtos: Modela produtos a serem comercializados
+    Produto apresenta atributos relativos a caracterização e descrição de um produto
+    >Impelementados: Inicializador, getters, setters e validadores
+    """
+    def __init__(self, subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda, valorcompra, foto):
         self._sub = subcategoria
         self._codigo = codigo
         self._nome = nome
@@ -66,8 +71,11 @@ class Produtos:
         self._descricao = descricao
         self._estoquemax = estoquemax
         self._estoquemin = estoquemin
+        self._quantidade = quantidade
         self._vbvenda = valorvenda
         self._vbcompra = valorcompra
+
+# properties
 
     @property
     def codigo(self):

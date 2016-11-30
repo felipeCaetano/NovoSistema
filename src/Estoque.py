@@ -90,6 +90,11 @@ class Estoque(object):
                 print("Valor Inválido!")
                 estoquemin = input("Valor deve ser Numérico: ")
 
+            quantidade = input("Quantidade Atual em Estoque: ")
+            while not Produtos.valida_estoque(quantidade):
+                print("Valor Inválido!")
+                estoquemin = input("Valor deve ser Numérico: ")
+
             valorvenda = input("Preço Unitário: ")
             while not Produtos.valida_valorvenda(valorvenda):
                 print("Valor Inválido!")
@@ -116,7 +121,7 @@ class Estoque(object):
                 else:
                     self.create_produto()
 
-            produto = Produtos( subcategoria, codigo, nome, descricao, estoquemax, estoquemin, valorvenda, valorcompra, foto)
+            produto = Produtos(subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda, valorcompra, foto)
 
         if produto not in self.produtos:
             self.produtos.append(produto)
@@ -166,10 +171,90 @@ class Estoque(object):
         self.menu_estoque()
 
     def altera_item(self):      # altera um item disponivel no estoque
-        print("alterando item do estoque")
-        self.menu_estoque()
+        while True:
+            print("Escolha o Item que deseja ALTERAR")
+            print("1- Alterar uma categoria\n2- Alterar uma Subcategoria\n3- Alterar um produto\n4 - SAIR")
+            opcao = input()
+
+            while not self.valida_opcao(opcao):
+                print("Opção Inválida!")
+                opcao = input()
+
+            if opcao == '1':
+                if not len(self.categorias):
+                    print("Não há Categorias Registradas!\n")
+                else:
+                    print("Escolha ma Categoria: ")
+                    [print(categoria.codigo, categoria.nome, end="**") for categoria in self.categorias]
+                    opcao = input("Digite Código Escolhido: ")
+                    for categoria in self.categorias:
+                        if categoria.nome == opcao:
+                            categoria.nome = input("\nDigite Nome: ")
+                            categoria.codigo = input("Digite codigo: ")
+                            categoria.descricao = input("Digite Descrição: ")
+                        else:
+                            print("Codigo não encontrado!\n")
+
+            elif opcao == '2':
+                if not len(self.subcategorias):
+                    print("Não há Subategorias Registradas!\n")
+                else:
+                    print("Escolha uma Subtegoria: ")
+                    [print(subcategoria.codigo, subcategoria.nome, end="**") for subcategoria in self.subcategorias]
+                    opcao = input("Digite Código Escolhido: ")
+                    for subcategoria in self.subcategorias:
+                        if subcategoria.codigo == opcao:
+                            subcategoria.nome = input("\nDigite Nome: ")
+                            subcategoria.codigo = input("Digite Código: ")
+                            subcategoria.descricao = input("Digite Descrição: ")
+                        else:
+                            print("Codigo não encontrado!\n")
+
+            elif opcao == '3':
+                if not len(self.produtos):
+                    print("Não há Produtos Registrados!\n")
+                else:
+                    print("Escolha um Produto: ")
+                    [print(produto.codigo, produto.nome, end="**") for produto in self.subcategorias]
+                    opcao = input("Digite Código Escolhido: ")
+                    for produto in self.produtos:
+                        if produto.codigo == opcao:
+                            nome = input("\nDigite Nome: ")
+                            if nome == "":
+                                pass        # Se não for mexido nesse campo nada é feito
+                            else:
+                                produto.nome = nome
+
+                            codigo = input("\nDigite Código: ")
+                            if codigo == "":
+                                pass  # Se não for mexido nesse campo nada é feito
+                            else:
+                                produto.codigo = codigo
+
+                            descricao = input("\nDigite Descrição: ")
+                            if descricao == "":
+                                pass  # Se não for mexido nesse campo nada é feito
+                            else:
+                                produto.descricao = descricao
+                        else:
+                            print("Codigo não encontrado!\n")
+
+            elif opcao == '4':
+                break
+
+            self.menu_estoque()
 
     def remove_item(self):    # remove um item disponivel no estoque - n remover se o item ainda tem produtos no estoque
+        """
+        Escolhe um tipo de item a ser removido do sistema de estoque
+        Apos escolhido o objeto é remadado o metodo del daquele objeto e então é destruido e removido da lista
+        de objetos
+
+        Se o item escolhido já tiver sido negociado não pode ser removido
+
+        :return: Sucess - "Item Removido com Sucesso!" or Fail - "Item não pode ser removido!"
+        """
+
         print("Removendo item do estoque")
         self.menu_estoque()
 

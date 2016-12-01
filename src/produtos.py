@@ -192,15 +192,20 @@ class Produtos(object):
     @staticmethod
     def valida_valorvenda(value):
         if value == "":
-            return False
-        if not value.isdigit():
-            return False
-        elif value <= 0:
+            print("String Vazia")
             return False
         else:
-            try:
-                float(value)
-                return True
-            except:
+            value=value.replace(",",".")    # se virgula for digitada no lugar de ponto
+            if value <= '0':
+                print("String negativa")
                 return False
+            else:
+                try:
+                    float(value)
+                    return True
+                except:
+                    print("String falha na conversão")
+                    return False
 
+    def __str__(self):
+        return str(self.__dict__)

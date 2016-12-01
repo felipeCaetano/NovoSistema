@@ -36,9 +36,11 @@ class Estoque(object):
         Cria uma categoria através dos dados recolhidos pelo formulário.
         Os dados são: Codigo, nome e descrição e a passagem de um objeto categoria
         """
+        print("***** CRIAR SUBCATEGORIA: ******")
         if len(self.categorias) == 0:
-            print("Você deve criar pelo menos uma CATEGORIA!\n")
-            self.create_categoria()
+            print("Não há categorias registradas!\nVocê deve criar pelo menos uma CATEGORIA!\n")
+            # self.create_categoria()
+            return 1
         print("- Criar SUBCATEGORIA -")
         codigo = input("CÓDIGO: ").strip()
         nome = input("NOME: ").strip()
@@ -49,12 +51,18 @@ class Estoque(object):
         for cat in self.categorias:
             if cat.nome == escolhe or cat.codigo == escolhe:
                 categoria = cat
+                subcategoria = Subcategoria(categoria, codigo, nome, descrição)
                 break
             else:
                 print("Categoria não Encontrada!\nVocê deve criar uma CATEGORIA!")
-                self.create_categoria()
-
-        subcategoria = Subcategoria(categoria, codigo, nome, descrição)
+                print("Deseja Criar um Subcategoria? (1- Sim /2- Não)")
+                opcao = input()
+                if opcao.strip() == '1' or opcao.lower() == 'sim' or opcao.lower() == 's':
+                    newcat = self.create_categoria()
+                    subcategoria = Subcategoria(newcat, codigo, nome, descrição)
+                    break
+                else:
+                    break
 
         if subcategoria not in self.subcategorias:
             self.subcategorias.append(subcategoria)
@@ -105,23 +113,22 @@ class Estoque(object):
                 print("Valor Inválido!")
                 estoquemax = input("Valor deve ser Numérico: ")
 
-            foto = input("Arquivo de foto: ")
+            foto = input("Arquivo de foto: ")                  # a ideia é receber um objeto file para arquivos de fotos
 
         subcategoria = 0
-
         for scat in self.subcategorias:
             if scat.nome.lower() == escolhe or scat.codigo == escolhe:
                 subcategoria = scat
                 break
+        else:                                                                  # saiu do laço e n encontrou subcategoria
+            print("Subcategoria não Encontrada!\nDeseja criar uma SUBCATEGORIA?\n1- Sim\n2 - Não")
+            choice = input()
+            if choice.lower() == 's' or choice == '1' or choice.lower() == 'sim':
+                self.create_subcategoria()
             else:
-                print("Subcategoria não Encontrada!\nDeseja criar uma SUBCATEGORIA?\n1- Sim\n2 - Não")
-                choice = input()
-                if choice.lower() == 's' or choice == '1':
-                    self.create_subcategoria()
-                else:
-                    self.create_produto()
+                self.create_produto()
 
-            produto = Produtos(subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda, valorcompra, foto)
+        produto = Produtos(subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda, valorcompra, foto)
 
         if produto not in self.produtos:
             self.produtos.append(produto)
@@ -129,10 +136,10 @@ class Estoque(object):
 
     # funcionalidade pedida na especificação
 
-    def low_stock_alarm(self):  # aviso de estoque baixo
+    def low_stock_alarm(self):                                                                  # aviso de estoque baixo
         pass
 
-    def consulta_estoque(self):    # exibe itens disponiveis no estoque
+    def consulta_estoque(self):                                                     # exibe itens disponiveis no estoque
         """"
         Metodo Consulta_estoque: Exibe na tela os itens que estão registrados
         Retorna se houver:
@@ -163,7 +170,7 @@ class Estoque(object):
             print("Não há Produtos Registrados!\n")
         else:
             for produto in self.produtos:
-                if produto == self.produtos[len(self.subcategorias)-1]:
+                if produto == self.produtos[len(self.produtos)-1]:
                     print(produto)
                 else:
                     print(produto, end=" ")
@@ -171,6 +178,14 @@ class Estoque(object):
         self.menu_estoque()
 
     def altera_item(self):      # altera um item disponivel no estoque
+        """
+        Altera item - Altera parametros do objeto escolhido
+        qualquer parametro pode ser alterado
+
+        Se você não desejar alterar um parametro pode simplemente deixa-lo em branco e digitar <ENTER>
+
+        :return: objeto escolhido alterado.
+        """
         while True:
             print("Escolha o Item que deseja ALTERAR")
             print("1- Alterar uma categoria\n2- Alterar uma Subcategoria\n3- Alterar um produto\n4 - SAIR")

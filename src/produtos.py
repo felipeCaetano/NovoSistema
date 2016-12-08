@@ -42,6 +42,8 @@ class Categoria(object):
 
     # overrides magic methods
 
+    
+
     def __str__(self):
         return str(self.__dict__)
 
@@ -76,6 +78,18 @@ class Produtos(object):
         self._vbcompra = valorcompra
 
 # properties
+
+    @property
+    def nome(self):
+        return self._nome
+
+    @nome.setter
+    def nome(self, value):
+        self._nome = value
+
+    @nome.deleter
+    def nome(self):
+        del self._nome
 
     @property
     def codigo(self):

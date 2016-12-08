@@ -1,4 +1,4 @@
-from src.produtos import *
+from produtos import *
 
 
 class Estoque(object):
@@ -46,7 +46,7 @@ class Estoque(object):
         nome = input("NOME: ").strip()
         descrição = input("DESCRIÇÃO: ").strip()
         escolhe = input("CATEGORIA (Nome ou Código): ")
-        categoria = 0
+        # categoria = 0
 
         for cat in self.categorias:
             if cat.nome == escolhe or cat.codigo == escolhe:
@@ -132,12 +132,26 @@ class Estoque(object):
 
         if produto not in self.produtos:
             self.produtos.append(produto)
-            print("Produto Adicionado com sucesso!")
+            print("Produto Adicionado com Sucesso!")
 
     # funcionalidade pedida na especificação
 
     def low_stock_alarm(self):                                                                  # aviso de estoque baixo
-        pass
+        """
+             AVISO DE ESTOQUE BAIXO:
+                Printa na tela uma lista de produtos que apresentam quantidade em estoque menor que a quantidade mínima
+                percorre toda a lista de produtos cadastrados e verifica se a quantidade atual de cada produto é menor
+                ou igual a quantidade mínima estabelecida
+
+            :return: produtos com estoque baixo
+        """
+        if len(self.produtos):
+            print("\n**********Lista de Produtos com estoque abaixo do Minimo: **********")
+            for produto in self.produtos:
+                if produto.quantida <= produto.estoquemin:
+                    print("%s em quantidade baixa! Abaixo de %d" % (produto.nome, produto.estoquemin))
+            else:
+                print("Os produtos não listados não precisam de reposições no momento.")
 
     def consulta_estoque(self):                                                     # exibe itens disponiveis no estoque
         """"
@@ -175,8 +189,6 @@ class Estoque(object):
                 else:
                     print(produto, end=" ")
 
-        self.menu_estoque()
-
     def altera_item(self):      # altera um item disponivel no estoque
         """
         Altera item - Altera parametros do objeto escolhido
@@ -188,7 +200,7 @@ class Estoque(object):
         """
         while True:
             print("Escolha o Item que deseja ALTERAR")
-            print("1- Alterar uma categoria\n2- Alterar uma Subcategoria\n3- Alterar um produto\n4 - SAIR")
+            print("1- Alterar uma categoria\n2- Alterar uma Subcategoria\n3- Alterar um produto\n0 - SAIR")
             opcao = input()
 
             while not self.valida_opcao(opcao):
@@ -203,7 +215,7 @@ class Estoque(object):
                     [print(categoria.codigo, categoria.nome, end="**") for categoria in self.categorias]
                     opcao = input("Digite Código Escolhido: ")
                     for categoria in self.categorias:
-                        if categoria.nome == opcao:
+                        if categoria.codigo == opcao:
                             categoria.nome = input("\nDigite Nome: ")
                             categoria.codigo = input("Digite codigo: ")
                             categoria.descricao = input("Digite Descrição: ")
@@ -230,7 +242,7 @@ class Estoque(object):
                     print("Não há Produtos Registrados!\n")
                 else:
                     print("Escolha um Produto: ")
-                    [print(produto.codigo, produto.nome, end="**") for produto in self.subcategorias]
+                    [print(produto.codigo, produto.nome, end="**") for produto in self.produtos]
                     opcao = input("Digite Código Escolhido: ")
                     for produto in self.produtos:
                         if produto.codigo == opcao:
@@ -254,10 +266,8 @@ class Estoque(object):
                         else:
                             print("Codigo não encontrado!\n")
 
-            elif opcao == '4':
+            elif opcao == '0':
                 break
-
-            self.menu_estoque()
 
     def remove_item(self):    # remove um item disponivel no estoque - n remover se o item ainda tem produtos no estoque
         """
@@ -271,13 +281,69 @@ class Estoque(object):
         """
 
         print("Removendo item do estoque")
-        self.menu_estoque()
+
+        while 1:
+            print("Digite o tipo de ITEM que deseja remover:\n1- Categoria\n2- Subcategoria\n3- Produto\n0 - SAIR")
+
+            opcao = input()
+
+            while not self.valida_opcao(opcao):
+                print("Opção Inválida!")
+                opcao = input()
+
+            if opcao == '1':
+                if not len(self.categorias):
+                    print("Não há Categorias Registradas!\n")
+                else:
+                    print("Escolha uma Categoria: ")
+                    [print(categoria.codigo, categoria.nome, end="**") for categoria in self.categorias]
+                    opcao = input("\nDigite Código Escolhido: ")
+                    for categoria in self.categorias:
+                        if categoria.codigo == opcao:
+                            index = self.categorias.index(categoria)
+                            del self.categorias[index]
+                            break
+                        else:
+                            print("Codigo não encontrado!\n")
+
+            elif opcao == '2':
+                if not len(self.subcategorias):
+                    print("Não há Subategorias Registradas!\n")
+                else:
+                    print("Escolha uma Subtegoria: ")
+                    [print(subcategoria.codigo, subcategoria.nome, end="**") for subcategoria in self.subcategorias]
+                    opcao = input("\nDigite Código Escolhido: ")
+                    for subcategoria in self.subcategorias:
+                        if subcategoria.codigo == opcao:
+                            index = self.subcategorias.index(subcategoria)
+                            del self.subcategorias[index]
+                            break
+                        else:
+                            print("Codigo não encontrado!\n")
+
+            elif opcao == '3':
+                if not len(self.produtos):
+                    print("Não há Produtos Registrados!\n")
+                else:
+                    print("Escolha um Produto: ")
+                    [print(produto.codigo, produto.nome, end="**") for produto in self.produtos]
+                    opcao = input("\nDigite Código Escolhido: ")
+                    for produto in self.produtos:
+                        if produto.codigo == opcao:
+                            index = self.produtos.index(produto)
+                            del self.produtos[index]
+                            break
+                        else:
+                            print("Codigo não encontrado!\n")
+
+            elif opcao == '0':
+                break
 
     def adiciona_item(self):     # adiciona novo item ao estoque
         print("Adicionando item ao estoque")
         while 1:
             print("************* Menu Adicionar: ******************")
-            print("Digite Ação!\n1 - Adicionar Categoria\n2 - Adicionar Subcategoria\n3 - Adicionar Produtos\n4 - Sair")
+            print("Digite Ação!\n1 - Adicionar Categoria\n2 - Adicionar Subcategoria\n3 - Adicionar Produtos\n0 - Sair")
             opcao = input()
             while not self.valida_opcao(opcao):
                 print("Opção Inválida!")
@@ -288,9 +354,8 @@ class Estoque(object):
                 self.create_subcategoria()
             elif opcao == '3':
                 self.create_produto()
-            elif opcao == '4':
+            elif opcao == '0':
                 break
-        self.menu_estoque()
 
     def menu_estoque(self):
         while True:
@@ -315,7 +380,7 @@ class Estoque(object):
                 break
 
     def valida_opcao(self, opcao):
-        if opcao.isdigit():
+        if opcao.isdigit() and opcao in "01234":
             return True
         else:
             return False

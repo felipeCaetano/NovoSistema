@@ -397,10 +397,64 @@ class Fornecedor(Pessoa):
 
 class Funcionario(Pessoa):
     # TODO: cliente tem foto
+    logins_list = []
 
     def __init__(self, nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc):
         super(Funcionario, self).__init__(nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
         self.__datanasc = datanasc
+        self.__login = self.create_login(nome)
+        self.__pass = self.set_password()
+
+# metodos exclusivos dos funcinários: Login e Senha
+
+    def create_login(self, nome):
+        """
+        Cria um login para um funcionário no momento do seu registro. Cada login de funcionário deve ser unico e criado
+        apartir do seu nome fornecido.
+
+        O login tem um numero fixo de caracteres e é formado pelas iniciais dos primeiros nomes + o ultimo nome desde
+        não ultrapasse o tamanho fixado
+
+        :param nome: nome do funcionário
+        :return: LOGIN do funcionário
+        """
+        LOGINMAXLENGTH = 9
+        login = ""
+        cont = 0
+        lista = nome.split()
+
+        for i in range(len(lista)):
+            if i == len(lista)-1:
+                if len(lista[i]) > 3:
+                    login += lista[i]
+            else:
+                if len(lista[i]) > 3:
+                    login += lista[i][0]
+            login = login.lower()
+        if len(login) > LOGINMAXLENGTH:
+            login = login[:-(len(login)-LOGINMAXLENGTH)]
+        print("Seu LOGIN é: ", login)
+        return  login
+
+    def set_password(self):
+        """
+        Metodo para solicitar e salvar senha do funcionário.
+        Senha deve ser digitada duas vezes e deve ser igual e de 8 caracteres
+
+        :return: senha do usuário
+        """
+        senha1 = ""
+        while not len(senha1) == 8:
+            print("Defina sua SENHA com 8 caracteres:\n")
+            senha1 = input("Digite sua senha: ")
+            senha2 = input("Repita sua senha: ")
+        while not senha1 == senha2:
+            print("As senhas devem ser iguais!\n")
+            senha1 = input("Digite sua senha: ")
+            senha2 = input("Repita sua senha: ")
+        else:
+            return senha1
+
 
     @property
     def datanasc(self):

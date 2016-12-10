@@ -42,10 +42,8 @@ class Categoria(object):
 
     # overrides magic methods
 
-    
-
     def __str__(self):
-        return str(self.__dict__)
+        return "{0}\t\t{1}\t\t{2}".format(self._codigo, self._nome, self._descricao)
 
     def __eq__(self, other):
         return self.codigo == other.codigo
@@ -57,6 +55,10 @@ class Subcategoria(Categoria):
         self.codigo = codigo
         self.nome = nome
         self.descricao = descricao
+
+    def __str__(self):
+        return "{0}\t\t{1}\t\t{2}\t\t{3}".format(self.codigo, self.nome, self.cat._nome, self._descricao)
+
 
 
 class Produtos(object):

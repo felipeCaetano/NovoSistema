@@ -165,20 +165,16 @@ class Estoque(object):
         if not len(self.categorias):
             print("Não há Categorias Registradas!\n")
         else:
+            print("CODIGO\t\tNOME:\t\tDESCRIÇÃO")
             for categoria in self.categorias:
-                if categoria == self.categorias[len(self.categorias)-1]:
-                    print(categoria)
-                else:
-                    print(categoria, end=" ")
+                print(categoria)
 
         if not len(self.subcategorias):
-            print("Não há Subcategorias Registradas!\n")
+            print("\nNão há Subcategorias Registradas!\n")
         else:
+            print("CODIGO\t\tNOME:\t\tCATEGORIA\t\tDESCRIÇÃO")
             for subcategoria in self.subcategorias:
-                if subcategoria == self.subcategorias[len(self.subcategorias)-1]:
-                    print(subcategoria)
-                else:
-                    print(subcategoria, end=" ")
+                print(subcategoria)
 
         if not len(self.produtos):
             print("Não há Produtos Registrados!\n")
@@ -213,12 +209,26 @@ class Estoque(object):
                 else:
                     print("Escolha ma Categoria: ")
                     [print(categoria.codigo, categoria.nome, end="**") for categoria in self.categorias]
-                    opcao = input("Digite Código Escolhido: ")
+                    opcao = input("\nDigite Código Escolhido: ")
                     for categoria in self.categorias:
                         if categoria.codigo == opcao:
-                            categoria.nome = input("\nDigite Nome: ")
-                            categoria.codigo = input("Digite codigo: ")
-                            categoria.descricao = input("Digite Descrição: ")
+                            print("Deixe em branco (PRESS ENTER) para não alterar o campo!")
+                            nome = input("\nDigite Nome: ")
+                            if nome == "":
+                                pass
+                            else:
+                                categoria.nome = nome
+
+                            codigo = input("Digite Código: ")
+                            if codigo == "":
+                                pass
+                            else:
+                                categoria.codigo = codigo
+                            descricao = input("Digite Descrição: ")
+                            if descricao == "":
+                                pass
+                            else:
+                                categoria.descricao = descricao
                         else:
                             print("Codigo não encontrado!\n")
 
@@ -228,12 +238,26 @@ class Estoque(object):
                 else:
                     print("Escolha uma Subtegoria: ")
                     [print(subcategoria.codigo, subcategoria.nome, end="**") for subcategoria in self.subcategorias]
-                    opcao = input("Digite Código Escolhido: ")
+                    opcao = input("\nDigite Código Escolhido: ")
                     for subcategoria in self.subcategorias:
                         if subcategoria.codigo == opcao:
-                            subcategoria.nome = input("\nDigite Nome: ")
-                            subcategoria.codigo = input("Digite Código: ")
-                            subcategoria.descricao = input("Digite Descrição: ")
+                            print("Deixe em branco (PRESS ENTER) para não alterar o campo!")
+                            nome = input("\nDigite Nome: ")
+                            if nome == "":
+                                pass
+                            else:
+                                subcategoria.nome = nome
+
+                            codigo = input("Digite Código: ")
+                            if codigo == "":
+                                pass
+                            else:
+                                subcategoria.codigo = codigo
+                            descricao = input("Digite Descrição: ")
+                            if descricao == "":
+                                pass
+                            else:
+                                subcategoria.descricao = descricao
                         else:
                             print("Codigo não encontrado!\n")
 
@@ -246,6 +270,7 @@ class Estoque(object):
                     opcao = input("Digite Código Escolhido: ")
                     for produto in self.produtos:
                         if produto.codigo == opcao:
+                            print("Deixe em branco (PRESS ENTER) para não alterar o campo!")
                             nome = input("\nDigite Nome: ")
                             if nome == "":
                                 pass        # Se não for mexido nesse campo nada é feito

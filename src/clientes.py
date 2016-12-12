@@ -4,10 +4,11 @@
 
 
 class Pessoa(object):
-    def __init__(self, nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro):
+    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro):
         self.__nome = nome
         self.__endereco = end
         self.__numero = num
+        self.__complemento = complemento
         self.__bairro = bairro
         self.__cidade = cidade
         self.__cep = cep
@@ -28,7 +29,7 @@ class Pessoa(object):
     def nome(self, valor):
         while not self.valida_nome(valor):
             print("Nome Inválido")
-            valor = input("NOME: ")
+            valor = input("NOME COMPLETO: ")
         else:
             self.__nome = valor
 
@@ -55,6 +56,14 @@ class Pessoa(object):
             valor = input("NÚMERO: ")
         else:
             self.__numero = valor
+
+    @property
+    def complemento(self):
+        return self.__complemento
+
+    @complemento.setter
+    def complemento(self, valor):
+        self.__complemento = valor
 
     @property
     def bairro(self):
@@ -164,100 +173,131 @@ class Pessoa(object):
         else:
             self.__cep = valor
 
-    # validadores
-    def valida_nome(self, nome):
+    # validadores Estáticos - Invocados antes de instanciarmos objetos para evitar instancias erradas
+    @staticmethod
+    def valida_nome(nome):
         if nome is "":
-            Pessoa.__nome = input("NOME: ")
+            print("Nome Invalido! ", end="")
+            print("Nome NÃO pode ser em branco!")
+            return False
         n = nome.split()
         for c in n:
             if not c.isalpha():
+                print("Nome Invalido! ", end="")
+                print("NOME DEVE CONTER APENAS LETRAS!")
                 return False
         else:
-            return nome
+            return True
 
-    def valida_endereco(self, endereco):
+    @staticmethod
+    def valida_endereco(endereco):
+        if endereco == "":
+            return True
         end = endereco.strip()
-        if end == "":
-            return True
-        for e in end:
-            if not e.isalnum():
+        end = end.split()
+        if end[0] not in ['Al.', 'Alameda', 'Rua', 'Dsc.', 'Descida', 'Aveninda', 'R.', 'Av.', 'Ld.', 'Ladeira', 'Estrada', 'Travessa', 'Trav.', 'Est.', 'Beco']:
+                print("Inisira LOGRADOURO VÁLIDO!")
+                print(sorted(['Al.', 'Alameda', 'Rua', 'Dsc.', 'Descida', 'Aveninda', 'R.', 'Av.', 'Ld.', 'Ladeira', 'Estrada', 'Travessa', 'Trav.', 'Est.', 'Beco']))
                 return False
         else:
             return True
 
-    def valida_numero(self, numero):
+    @staticmethod
+    def valida_numero(numero):
         nb = numero.strip()
-        if nb == "":
+        if nb == "" or nb == "S/N":
             return True
-        for number in nb:
-            if not number.isdigit():
-                return False
+        if not nb.isdigit():
+            print("Valor deve ser númerico ou S/N!")
+            return False
         else:
             return True
 
-    def valida_bairro(self, bairro):
+    @staticmethod
+    def valida_bairro(bairro):
+        if bairro == "":
+            return True
         b = bairro.strip()
         b = b.split()
-        for nbh in b:
-            if not nbh.isalpha():
-                return False
+        if not b[0].isalpha():
+            print("Bairro Deve ter NOME começado com palavra!")
+            return False
         else:
             return True
 
-    def valida_cidade(self, cidade):
+    @staticmethod
+    def valida_cidade(cidade):
+        if cidade == "":
+            return True
         c = cidade.strip()
         c = cidade.split()
         for city in c:
             if not city.isalpha():
+                print("Cidade Deve ter NOME começado com palavra!")
                 return False
         else:
             return True
 
-    def valida_estado(self, estado):
+    @staticmethod
+    def valida_estado(estado):
         estados = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',
                    'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']
         e = estado.strip()
         if e.upper() not in estados:
+            print("Digite UF do BRASIL Válida!")
             return False
         else:
             return True
 
-    def valida_cep(self, cep):
-        cep.replace("-", "")
-        if len(cep) != 8:
+    @staticmethod
+    def valida_cep(cep):
+        if cep == "":
+            return True
+        c = cep.replace("-", "")
+        if len(c) != 8:
+            print("CEP Inválido! Verifique a quantidade de dígitos")
             return False
-        elif cep.isdigit():
+        elif c.isdigit():
             return True
 
-    def valida_telefone(self, telefone):
-        s = telefone.replace("(", "")
-        s = telefone.replace(")", "")
-        s = telefone.replace("-", "")
+    @staticmethod
+    def valida_telefone(telefone):
+        # TODO: verificar os DDDs se estão de acordo com a lista do Brasil
+        s = telefone
+        s = s.replace("(", "")
+        s = s.replace(")", "")
+        s = s.replace("-", "")
 
         if telefone == "":
             return True
         elif len(s) < 8:
+            print("Telefone Inválido! Verifique a quantidade de dígitos")
             return False
         elif 8 < len(s) <= 10 and s.isdigit():
             return True
 
-    def valida_celular(self, celular):
+    @staticmethod
+    def valida_celular(celular):
         s = celular.replace("(", "")
         s = celular.replace(")", "")
         s = celular.replace("-", "")
-
+# TODO: verificar os DDDs se estão de acordo com a lista do Brasil
         if celular == "":
             return True
         if len(s) < 9:
+            print("Celular Inválido! Numero de digitos Inválidos!")
             return False
         if len(s) == 9 and s[0] != '9':
+            print("Celular Inválido! Numero deve começar por 9!")
             return False
         if len(s) == 11 and s[2] != '9':
+            print("Celular Inválido! Numero deve começar por 9!")
             return False
         else:
             return True
 
-    def valida_email(self, email):
+    @staticmethod
+    def valida_email(email):
         """Verificador de email fraco
         @TODO - Usar expressões regulares
         verifica apenas se tem @ e .com
@@ -268,33 +308,40 @@ class Pessoa(object):
                 if email.find(".com") > 0:
                     return email
                 else:
+                    print("EMAIL inválido! Insira a terminação .com")
                     return False
             else:
+                print("EMAIL inválido! Não deve começar por @")
                 return False
         else:
-            return "Email Inválido"
-
-    def valida_rg(self, rg):
-        if rg == "":
-            return True
-        if rg != "":
-            if 5 <= len(rg) <= 7:
-                if rg.isdigit():
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        else:
+            print("EMAIL inválido! Endereço deve conter @")
             return False
 
-    def valida_cadastro(self, cadastro):
+    @staticmethod
+    def valida_rg(rg):
+        if rg == "":
+            return True
+        if 5 <= len(rg) <= 7:
+            if rg.isdigit():
+                return True
+            else:
+                print("RG Inválido! Valor deve ser numérico")
+                return False
+        else:
+            print("RG Inválido! Verifique a quantidade de Dígitos")
+            return False
+
+    @staticmethod
+    def valida_cadastro(cadastro):
         result = 0
-        s = cadastro.replace("-", "")  # remove o traço se houver
-        s = cadastro.replace(".", "")
-        s = cadastro.replace("/", "")
+        s = cadastro
+        s = s.replace("-", "")  # remove o traço se houver
+        s = s.replace(".", "")
+        s = s.replace("/", "")
+
         if len(s) < 11:
-            return False  # maior ou menor q 11 n vale
+            print("CPF/CNPJ Inválido! Verifique a quantidade de Dígitos")
+            return False  # maior ou menor q 11 n vale 012923084-78
         if len(s) == 11:
             a = [int(x) for x in range(2, 11)]
             a.reverse()  # primeira parte da vericação
@@ -316,9 +363,12 @@ class Pessoa(object):
                 if result == int(s[10]):  # verificação 2 ok.
                     return True
                 else:
+                    print("CPF Inválido! Erro no digito Verificador")
                     return False
             else:
+                print("CPF Inválido! Erro no digito Verificador")
                 return False
+
         elif len(s) == 14:
             lista = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
             resultado = 0
@@ -347,8 +397,10 @@ class Pessoa(object):
                 if resultado == int(s[13]):
                     return True
                 else:
+                    print("CNPJ Inválido! Erro no digito Verificador")
                     return False
             else:
+                print("CNPJ Inválido! Erro no digito Verificador")
                 return False
 
     def __str__(self):
@@ -357,8 +409,8 @@ class Pessoa(object):
 
 class Cliente(Pessoa):
 
-    def __init__(self, nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc):
-        Pessoa.__init__(self, nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
+    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc):
+        Pessoa.__init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
         self.__datanasc = datanasc
 
     @property
@@ -373,7 +425,8 @@ class Cliente(Pessoa):
         else:
             self.__datanasc = valor
 
-    def valida_data(self, data):
+    @staticmethod
+    def valida_data(data):
         s = data.replace("/", "")
         if data == "":
             return data
@@ -391,19 +444,20 @@ class Cliente(Pessoa):
 
 class Fornecedor(Pessoa):
     # fornecedor tem cnpj
-    def __init__(self, nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro):
-        super(Fornecedor, self).__init__(nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
+    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro):
+        super(Fornecedor, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
 
 
 class Funcionario(Pessoa):
     # TODO: cliente tem foto
     logins_list = []
 
-    def __init__(self, nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc):
-        super(Funcionario, self).__init__(nome, end, num, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
+    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc, gerente):
+        super(Funcionario, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
         self.__datanasc = datanasc
         self.__login = self.create_login(nome)
         self.__pass = self.set_password()
+        self.__gerente = gerente
 
 # metodos exclusivos dos funcinários: Login e Senha
 
@@ -423,18 +477,18 @@ class Funcionario(Pessoa):
         cont = 0
         lista = nome.split()
 
-        for i in range(len(lista)):
+        for i, n in enumerate(lista):
             if i == len(lista)-1:
-                if len(lista[i]) > 3:
-                    login += lista[i]
+                if len(n) > 3:
+                    login += n
             else:
-                if len(lista[i]) > 3:
-                    login += lista[i][0]
+                if len(n) > 3:
+                    login += n[0]
             login = login.lower()
         if len(login) > LOGINMAXLENGTH:
             login = login[:-(len(login)-LOGINMAXLENGTH)]
         print("Seu LOGIN é: ", login)
-        return  login
+        return login
 
     def set_password(self):
         """
@@ -455,7 +509,6 @@ class Funcionario(Pessoa):
         else:
             return senha1
 
-
     @property
     def datanasc(self):
         return self.__datanasc
@@ -468,7 +521,9 @@ class Funcionario(Pessoa):
         else:
             self.__datanasc = valor
 
-    def valida_data(self, data):
+    # Validadores estáticos de Funcionários
+    @staticmethod
+    def valida_data(data):
         s = data.replace("/", "")
         if data == "":
             return data
@@ -483,5 +538,15 @@ class Funcionario(Pessoa):
             else:
                 return False
 
-pessoa1 = Fornecedor("João", "ru", 12, "a", 'b', 52111200, 'PE', '34442125', '96360718', 'felipecmelo@gmail.com', '1234567', '01292308470')
-print(pessoa1)
+    @staticmethod
+    def valida_status(gerente):
+
+        if gerente == "":
+            print("Status ERROR - Deve ser fornecido o nivel de acesso ao sistema!")
+            return False
+        else:
+            if gerente.lower() == 's' or gerente.lower() == 'sim' or gerente.lower() == 'n' or gerente.lower() == 'nao' or gerente.lower() == 'não':
+                return True
+            else:
+                print("Opção Inválida! Digite Somente S ou N")
+                return False

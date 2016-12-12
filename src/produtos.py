@@ -57,7 +57,7 @@ class Subcategoria(Categoria):
         self.descricao = descricao
 
     def __str__(self):
-        return "{0}\t\t{1}\t\t{2}\t\t{3}".format(self.codigo, self.nome, self.cat._nome, self._descricao)
+        return "{0}\t\t{1}\t\t{2}\t\t{3}".format(self.codigo, self.nome, self.cat.nome, self._descricao)
 
 
 

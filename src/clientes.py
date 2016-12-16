@@ -444,8 +444,8 @@ class Cliente(Pessoa):
 
 class Fornecedor(Pessoa):
     # fornecedor tem cnpj
-    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro):
-        super(Fornecedor, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
+    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, cadastro):
+        super(Fornecedor, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, 111111, cadastro)
 
 
 class Funcionario(Pessoa):

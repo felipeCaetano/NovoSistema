@@ -410,4 +410,4 @@ class Estoque(object):
         else:
             return False
 
-estoque = Estoque()
+# estoque = Estoque()

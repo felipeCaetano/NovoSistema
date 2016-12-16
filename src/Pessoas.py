@@ -14,6 +14,7 @@ class Pessoas(object):
         self.clientes = []
         self.fornecedores = []
         self.funcionarios = []
+        self.menu_pessoas()
 
     def menu_pessoas(self):
         while True:
@@ -439,7 +440,7 @@ class Pessoas(object):
                             if nome == "":
                                 pass
                             else:
-                                while not Forncedor.valida_nome(nome):
+                                while not Fornecedor.valida_nome(nome):
                                     nome = input("\nNOME: ")
                                 else:
                                     fornecedor.nome = nome
@@ -448,7 +449,7 @@ class Pessoas(object):
                             if end == "":
                                 pass
                             else:
-                                while not Forncedor.valida_endereco(end):
+                                while not Fornecedor.valida_endereco(end):
                                     end = input("\nENDEREÇO: ")
                                 else:
                                     fornecedor.endereco = end
@@ -457,7 +458,7 @@ class Pessoas(object):
                             if num == "":
                                 pass
                             else:
-                                while not Forncedor.valida_numero(num):
+                                while not Fornecedor.valida_numero(num):
                                     num = input("\nN°: ")
                                 else:
                                     fornecedor.numero = num
@@ -472,7 +473,7 @@ class Pessoas(object):
                             if bairro == "":
                                 pass
                             else:
-                                while not Forncedor.valida_bairro(bairro):
+                                while not Fornecedor.valida_bairro(bairro):
                                     bairro = input("\nBAIRRO: ")
                                 else:
                                     fornecedor.bairro = bairro
@@ -481,7 +482,7 @@ class Pessoas(object):
                             if cidade == "":
                                 pass
                             else:
-                                while not Forncedor.valida_cidade(cidade):
+                                while not Fornecedor.valida_cidade(cidade):
                                     cidade = input("\nCIDADE: ")
                                 else:
                                     fornecedor.cidade = cidade
@@ -490,7 +491,7 @@ class Pessoas(object):
                             if cep == "":
                                 pass
                             else:
-                                while not Forncedor.valida_cep(cep):
+                                while not Fornecedor.valida_cep(cep):
                                     cep = input("\nCEP: ")
                                 else:
                                     fornecedor.cep = cep
@@ -499,7 +500,7 @@ class Pessoas(object):
                             if uf == "":
                                 pass
                             else:
-                                while not Forncedor.valida_estado(uf):
+                                while not Fornecedor.valida_estado(uf):
                                     uf = input("\nUF: ")
                                 else:
                                     fornecedor.estado = uf
@@ -508,7 +509,7 @@ class Pessoas(object):
                             if tel == "":
                                 pass
                             else:
-                                while not Forncedor.valida_telefone(tel):
+                                while not Fornecedor.valida_telefone(tel):
                                     tel = input("\nTELEFONE: ")
                                 else:
                                     fornecedor.telefone = tel
@@ -517,7 +518,7 @@ class Pessoas(object):
                             if cel == "":
                                 pass
                             else:
-                                while not Forncedor.valida_celular(cel):
+                                while not Fornecedor.valida_celular(cel):
                                     cel = input("\nCELULAR: ")
                                 else:
                                     fornecedor.celular = cel
@@ -526,7 +527,7 @@ class Pessoas(object):
                             if email == "":
                                 pass
                             else:
-                                while not Forncedor.valida_email(email):
+                                while not Fornecedor.valida_email(email):
                                     email = input("\nEMAIL: ")
                                 else:
                                     fornecedor.email = email
@@ -535,7 +536,7 @@ class Pessoas(object):
                             if rg == "":
                                 pass
                             else:
-                                while not Forncedor.valida_rg(rg):
+                                while not Fornecedor.valida_rg(rg):
                                     rg = input("\nRG: ")
                                 else:
                                     fornecedor.rg = rg
@@ -544,7 +545,7 @@ class Pessoas(object):
                             if cpf == "":
                                 pass
                             else:
-                                while not Forncedor.valida_cadastro(cpf):
+                                while not Fornecedor.valida_cadastro(cpf):
                                     cpf = input("\nCNPJ: ")
                                 else:
                                     fornecedor.cadastro = cpf
@@ -718,6 +719,7 @@ class Pessoas(object):
                         if cliente.cadastro == opcao:
                             index = self.clientes.index(cliente)
                             del self.clientes[index]
+                            print("Item Removido com Sucesso!")
                             break
                         else:
                             print("Cliente não encontrado!\n")
@@ -733,6 +735,7 @@ class Pessoas(object):
                         if fornecedor.cadastro == opcao:
                             index = self.fornecedores.index(fornecedor)
                             del self.fornecedores[index]
+                            print("Item Removido com Sucesso!")
                             break
                         else:
                             print("Fornecedor não encontrado!\n")
@@ -742,12 +745,13 @@ class Pessoas(object):
                     print("Não há Funcionários Registrados!\n")
                 else:
                     print("Escolha um Funcionário: ")
-                    [print(funcionario.codigo, funcionario.nome) for funcionario in self.funcionarios]
+                    [print(funcionario.cadastro, funcionario.nome) for funcionario in self.funcionarios]
                     opcao = input("\nDigite Código Escolhido: ")
                     for funcionario in self.funcionarios:
                         if funcionario.cadastro == opcao:
                             index = self.funcionarios.index(funcionario)
                             del self.funcionarios[index]
+                            print("Item Removido com Sucesso!")
                             break
                         else:
                             print("Funcionário não encontrado!\n")
@@ -769,25 +773,28 @@ class Pessoas(object):
             print("Não há Clientes Registrados!\n")
         else:
             print("CLIENTES CADASTRADOS")
-            print("CPF\t\t\tNOME:\t\t\t\tTELEFONE\t\tEMAIL")
+            print("CPF\t\t\tNOME:\t\t\t\t\tTELEFONE\t\tEMAIL")
             for cliente in self.clientes:
                 print(cliente.cadastro, cliente.nome, cliente.telefone, cliente.email)
+                print()
 
         if not len(self.funcionarios):
             print("\nNão há Funcionários Registrados!\n")
         else:
             print("FUNCIONÁRIOS CADASTRADOS")
-            print("CPF\t\tNOME:\t\t\t\tTELEFONE\t\tEMAIL")
+            print("CPF\t\t\tNOME:\t\t\t\t\tTELEFONE\t\tEMAIL")
             for funcionario in self.funcionarios:
                 print(funcionario.cadastro, funcionario.nome, funcionario.telefone, funcionario.email)
+                print()
 
         if not len(self.fornecedores):
             print("Não há Fornecedores Registrados!\n")
         else:
-            print("<h1>FORNECEDORES CADASTRADOS</h1>")
-            print("CNPJ\t\tNOME:\t\t\t\tTELEFONE\t\tEMAIL")
+            print("FORNECEDORES CADASTRADOS:")
+            print("CNPJ\t\t\t\tNOME:\t\t\t\t\tTELEFONE\t\tEMAIL")
             for forncedor in self.fornecedores:
                 print(forncedor.cadastro, forncedor.nome, forncedor.telefone, forncedor.email)
+                print()
 
-p = Pessoas()
-p.menu_pessoas()
+#p = Pessoas()
+#p.menu_pessoas()

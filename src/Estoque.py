@@ -41,12 +41,11 @@ class Estoque(object):
             print("Não há categorias registradas!\nVocê deve criar pelo menos uma CATEGORIA!\n")
             # self.create_categoria()
             return 1
-        print("- Criar SUBCATEGORIA -")
+        print("\n***- Criar SUBCATEGORIA -***\n")
         codigo = input("CÓDIGO: ").strip()
         nome = input("NOME: ").strip()
         descrição = input("DESCRIÇÃO: ").strip()
         escolhe = input("CATEGORIA (Nome ou Código): ")
-        # categoria = 0
 
         for cat in self.categorias:
             if cat.nome == escolhe or cat.codigo == escolhe:
@@ -55,7 +54,7 @@ class Estoque(object):
                 break
             else:
                 print("Categoria não Encontrada!\nVocê deve criar uma CATEGORIA!")
-                print("Deseja Criar um Subcategoria? (1- Sim /2- Não)")
+                print("\nDeseja Criar um Subcategoria? (1- Sim /2- Não)")
                 opcao = input()
                 if opcao.strip() == '1' or opcao.lower() == 'sim' or opcao.lower() == 's':
                     newcat = self.create_categoria()
@@ -92,28 +91,34 @@ class Estoque(object):
             while not Produtos.valida_estoque(estoquemax):
                 print("Valor Inválido!")
                 estoquemax = input("Valor deve ser Numérico: ")
+            estoquemax = int(estoquemax)
 
             estoquemin = input("Quantidade Minima em Estoque: ")
             while not Produtos.valida_estoque(estoquemin):
                 print("Valor Inválido!")
                 estoquemin = input("Valor deve ser Numérico: ")
+            estoquemin = int(estoquemin)
 
             quantidade = input("Quantidade Atual em Estoque: ")
             while not Produtos.valida_estoque(quantidade):
                 print("Valor Inválido!")
-                estoquemin = input("Valor deve ser Numérico: ")
+                quantidade = input("Valor deve ser Numérico: ")
+            quantidade = int(quantidade)
 
             valorvenda = input("Preço Unitário: ")
             while not Produtos.valida_valorvenda(valorvenda):
                 print("Valor Inválido!")
-                estoquemax = input("Valor deve ser Numérico: ")
+                valorvenda = input("Valor deve ser Numérico: ")
+            valorvenda = float(valorvenda.replace(",", "."))
 
             valorcompra = input("Valor de Compra: ")
             while not Produtos.valida_valorvenda(valorcompra):
                 print("Valor Inválido!")
-                estoquemax = input("Valor deve ser Numérico: ")
+                valorcompra = input("Valor deve ser Numérico: ")
+            valorcompra = float(valorcompra.replace(",", "."))
 
             foto = input("Arquivo de foto: ")                  # a ideia é receber um objeto file para arquivos de fotos
+            # TODO: Criar codigo para tratar imagens
 
         subcategoria = 0
         for scat in self.subcategorias:

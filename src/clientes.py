@@ -229,9 +229,7 @@ class Pessoa(object):
     def valida_cidade(cidade):
         if cidade == "":
             return True
-        c = cidade.strip()
-        c = cidade.split()
-        for city in c:
+        for city in cidade.strip().split():
             if not city.isalpha():
                 print("Cidade Deve ter NOME começado com palavra!")
                 return False
@@ -474,7 +472,6 @@ class Funcionario(Pessoa):
         """
         LOGINMAXLENGTH = 9
         login = ""
-        cont = 0
         lista = nome.split()
 
         for i, n in enumerate(lista):
@@ -502,6 +499,9 @@ class Funcionario(Pessoa):
             print("Defina sua SENHA com 8 caracteres:\n")
             senha1 = input("Digite sua senha: ")
             senha2 = input("Repita sua senha: ")
+            if len(senha1) != len(senha2):
+                print("As senhas devem ter 8 caracteres!")
+                senha1 = ""
         while not senha1 == senha2:
             print("As senhas devem ser iguais!\n")
             senha1 = input("Digite sua senha: ")

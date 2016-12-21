@@ -796,5 +796,5 @@ class Pessoas(object):
                 print(forncedor.cadastro, forncedor.nome, forncedor.telefone, forncedor.email)
                 print()
 
-#p = Pessoas()
-#p.menu_pessoas()
+# p = Pessoas()
+# p.menu_pessoas()

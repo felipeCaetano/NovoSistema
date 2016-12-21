@@ -51,6 +51,7 @@ class Categoria(object):
 
 class Subcategoria(Categoria):
     def __init__(self, categoria, codigo, nome, descricao):
+        # TODO: Chamar SuperClasse?
         self.cat = categoria
         self.codigo = codigo
         self.nome = nome
@@ -145,7 +146,7 @@ class Produtos(object):
         del self._estoquemax
 
     @property
-    def estoquemin(self, value):
+    def estoquemin(self):
         return self._estoquemin
 
     @estoquemin.setter
@@ -195,7 +196,7 @@ class Produtos(object):
     @quantidade.setter
     def quantidade(self, value):
         while not self.valida_estoque(value):
-            value = ("Quantidade Atual em Estoque: ")
+            value = input("Quantidade Atual em Estoque: ")
         else:
             self._quantidade = value
 
@@ -209,8 +210,8 @@ class Produtos(object):
         if value == "":
             print("Este campo não pode estar em branco!")
             return False
-        #if not value.isdigit():
-         #   return False
+        # if not value.isdigit():
+        #   return False
         elif int(value) <= 0:
             print("Digite Valor Positivo!")
             return False
@@ -228,16 +229,15 @@ class Produtos(object):
             print("Entrada não pode ser em branco!")
             return False
         else:
-            value = value.replace(",", ".")    # se virgula for digitada no lugar de ponto
+            value = value.replace(",", ".")                                  # se virgula for digitada no lugar de ponto
             try:
-                value = float(value)
+                float(value)
+                if value <= 0:
+                    print("Entrada não pode ser negativa!")
+                    return False
                 return True
             except ValueError:
                 print("Valor deve ser numérico!")
-                return False
-
-            if value <= 0:
-                print("Entrada não pode ser negativa!")
                 return False
 
     def __str__(self):

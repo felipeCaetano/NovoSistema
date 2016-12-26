@@ -5,6 +5,7 @@ Possui funções definidas na especificação
 """
 
 from clientes import *
+import pickle
 
 
 class Pessoas(object):
@@ -14,6 +15,7 @@ class Pessoas(object):
         self.clientes = []
         self.fornecedores = []
         self.funcionarios = []
+        self.load()
         self.menu_pessoas()
 
     def menu_pessoas(self):
@@ -44,15 +46,21 @@ class Pessoas(object):
         else:
             return False
 
+    def load(self):
+        pass
     # metodos pra salvar os objetos em disco
     def save_clientes(self):
-        pass
+        with open('clientes.vdc','wb') as arquivo_clientes:
+            pickle.dump(self.clientes, arquivo_clientes)
 
     def save_fornecedores(self):
-        pass
+        with open('fornecedores.vdc','wb') as arquivo_fornecedores:
+            pickle.dump(self.fornecedores, arquivo_fornecedores)
 
     def save_funcionarios(self):
-        pass
+        with open('categorias.vdc','wb') as arquivo_categorias:
+            pickle.dump(self.categorias, arquivo_categorias)
+
 
     # funções pedidas na especificação
 

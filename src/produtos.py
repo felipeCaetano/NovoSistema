@@ -231,7 +231,7 @@ class Produtos(object):
         else:
             value = value.replace(",", ".")                                  # se virgula for digitada no lugar de ponto
             try:
-                float(value)
+                value = float(value)
                 if value <= 0:
                     print("Entrada não pode ser negativa!")
                     return False

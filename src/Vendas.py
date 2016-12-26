@@ -25,6 +25,7 @@ from Pessoas import *
 
 class Vendas(object):
     resumodevendas = []
+    resumodecompras = []
 
     def __init__(self):
         self.vendidos = []
@@ -206,10 +207,28 @@ class Vendas(object):
                     return 0
 
     def relatorio_venda(self):
-        pass
+        print("Cadastro:\t\t\tNome:\t\t\t\n")
+        for item in self.resumodevendas:
+            print("%s\t\t\t%s\t\t\t\n" % (item[0].cadastro, item[0].nome))
+            print("Itens Adquiridos:")
+            print("Codigo\tNome\t\tQuantidade\tValor")
+            for compras in item[1]:
+                print("%s\t%s\t\t%s\t%s" % (compras[0], compras[1], compras[2], compras[3]))
+            print("Total:", end='')
+            print(item[2])
+            print("Dinheiro: R$ %s\tTroco: %s" % (item[3], item[4]))
 
     def relatorio_compra(self):
-        pass
+        print("Cadastro:\t\t\tNome:\t\t\t\n")
+        for item in self.resumodecompras:
+            print("%s\t\t\t%s\t\t\t\n" % (item[0].cadastro, item[0].nome))
+            print("Itens Adquiridos:")
+            print("Codigo\tNome\t\tQuantidade\tValor")
+            for compras in item[1]:
+                print("%s\t%s\t\t%s\t%s" % (compras[0], compras[1], compras[2], compras[3]))
+            print("Total:", end='')
+            print(item[2])
+            print("Dinheiro: R$ %s\tTroco: %s" % (item[3], item[4]))
 
     def pagamento(self, total, listadecompras, pessoa):
         if type(pessoa) == Cliente:
@@ -231,8 +250,10 @@ class Vendas(object):
                 print("Pagamento Realizado com Sucesso!\n")
                 print("Troco: %.2f" % troco)
                 print("\nOBRIGADO E VOLTE SEMPRE!!")
-                self.resumodevendas.append([pessoa, listadecompras, total, dinheiro, troco])
-
+                if type(pessoa) == Cliente:
+                    self.resumodevendas.append([pessoa, listadecompras, total, dinheiro, troco])
+                elif type(pessoa) == Fornecedor:
+                    self.resumodecompras.append([pessoa, listadecompras, total, dinheiro, troco])
         else:
             print("Venda Cancelada!")
             return 1

@@ -1,21 +1,42 @@
 from produtos import *
-
+import pickle
 
 class Estoque(object):
     def __init__(self):
         self.categorias = []
         self.subcategorias = []
         self.produtos = []
+        self.load()
         self.menu_estoque()
 
-    def save_categoria(self, categoria):
-        pass
+    def load(self):
+        try:
+            with open('categorias.vdc', 'rb') as arquivo_categorias:
+                self.categorias = pickle.load(arquivo_categorias)
+        except FileNotFoundError:
+            self.categorias = []
+        try:
+            with open('subcategorias.vdc','rb') as arquivo_subcategorias:
+                self.subcategorias = pickle.load(arquivo_subcategorias)
+        except FileNotFoundError:
+            self.subcategorias = []
+        try:
+            with open('produtos.vdc','rb') as arquivo_produtos:
+                self.produtos = pickle.load(arquivo_produtos)
+        except FileNotFoundError:
+            self.produtos = []
 
-    def save_subcategorias(self, subcategoria):
-        pass
+    def save_categoria(self):
+        with open('categorias.vdc','wb') as arquivo_categorias:
+            pickle.dump(self.categorias, arquivo_categorias)
 
-    def save_produtos(self, produto):
-        pass
+    def save_subcategorias(self):
+        with open('subcategorias.vdc','wb') as arquivo_subcategorias:
+            pickle.dump(self.subcategorias, arquivo_subcategorias)
+
+    def save_produtos(self):
+        with open('produtos.vdc','wb') as arquivo_produtos:
+            pickle.dump(self.produtos, arquivo_produtos)
 
     def create_categoria(self):
         """"
@@ -29,7 +50,10 @@ class Estoque(object):
         categoria = Categoria(codigo, nome, descrição)
         if categoria not in self.categorias:
             self.categorias.append(categoria)
-            print("Categoria Adicionada com sucesso!")
+            self.save_categoria()
+            print("Categoria Adicionada com sucesso!\n")
+        else:
+            print("Categoria ou Código já existente\n")
 
     def create_subcategoria(self):
         """"
@@ -65,6 +89,7 @@ class Estoque(object):
 
         if subcategoria not in self.subcategorias:
             self.subcategorias.append(subcategoria)
+            self.save_subcategorias()
             print("Subcategoria Adicionada com sucesso!")
 
     def create_produto(self):
@@ -137,6 +162,7 @@ class Estoque(object):
 
         if produto not in self.produtos:
             self.produtos.append(produto)
+            self.save_produtos()
             print("Produto Adicionado com Sucesso!")
 
     # funcionalidade pedida na especificação

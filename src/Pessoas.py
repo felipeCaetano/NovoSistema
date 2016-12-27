@@ -47,7 +47,22 @@ class Pessoas(object):
             return False
 
     def load(self):
-        pass
+        try:
+            with open('clientes.vdc', 'wb') as arquivo_clientes:
+                pickle.dump(self.clientes, arquivo_clientes)
+        except FileNotFoundError:
+            self.clientes = []
+        try:
+            with open('fornecedores.vdc', 'wb') as arquivo_fornecedores:
+                pickle.dump(self.fornecedores, arquivo_fornecedores)
+        except FileNotFoundError:
+            self.fornecedores = []
+        try:
+            with open('funcionarios.vdc', 'wb') as arquivo_funcionarios:
+                pickle.dump(self.funcionarios, arquivo_funcionarios)
+        except FileNotFoundError:
+            self.funcionarios = []
+
     # metodos pra salvar os objetos em disco
     def save_clientes(self):
         with open('clientes.vdc','wb') as arquivo_clientes:
@@ -58,14 +73,15 @@ class Pessoas(object):
             pickle.dump(self.fornecedores, arquivo_fornecedores)
 
     def save_funcionarios(self):
-        with open('categorias.vdc','wb') as arquivo_categorias:
-            pickle.dump(self.categorias, arquivo_categorias)
+        with open('funcionarios.vdc','wb') as arquivo_funcionarios:
+            pickle.dump(self.funcionarios, arquivo_funcionarios)
 
 
     # funções pedidas na especificação
 
     def novo(self):
         while True:
+            
             print("||||||| *** Sistema de Vendas ao Consumidor *** |||||||")
             print("****** CRIAR NOVO *****")
             print("Digite Ação!\n1 - Novo Cliente\n2 - Novo Funcionário \n3 - Novo Fornecedor\n0 - SAIR")

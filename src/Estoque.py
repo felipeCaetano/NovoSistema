@@ -43,10 +43,14 @@ class Estoque(object):
         Cria uma categoria através dos dados recolhidos pelo formulário.
         Os dados são: Codigo, nome e descrição
         """
-        print("- Criar CATEGORIA -")
+        print(chr(847)*25,"- Criar CATEGORIA -",chr(847)*25)
+        print("\n", chr(847), " ", end="")
         codigo = input("CÓDIGO: ").strip()
+        print("\n", chr(847), " ", end="")
         nome = input("NOME: ").strip()
+        print("\n", chr(847), " ", end="")
         descrição = input("DESCRIÇÃO: ").strip()
+        print("\n", chr(847), " ", end="")
         categoria = Categoria(codigo, nome, descrição)
         if categoria not in self.categorias:
             self.categorias.append(categoria)
@@ -60,12 +64,11 @@ class Estoque(object):
         Cria uma categoria através dos dados recolhidos pelo formulário.
         Os dados são: Codigo, nome e descrição e a passagem de um objeto categoria
         """
-        print("***** CRIAR SUBCATEGORIA: ******")
+        print(chr(847)*25,"- CRIAR SUBCATEGORIA -",chr(847)*25)
         if len(self.categorias) == 0:
             print("Não há categorias registradas!\nVocê deve criar pelo menos uma CATEGORIA!\n")
             # self.create_categoria()
             return 1
-        print("\n***- Criar SUBCATEGORIA -***\n")
         codigo = input("CÓDIGO: ").strip()
         nome = input("NOME: ").strip()
         descrição = input("DESCRIÇÃO: ").strip()

@@ -33,8 +33,8 @@ class Vendas(object):
 
     def menu_vendas(self):
         while True:
-            print("Sistema de Vendas ao Consumidor")
-            print("****** MENU DE VENDAS *****")
+            print(chr(847)*25, "- Sistema de Vendas ao Consumidor -", chr(847)*25)
+            print(chr(847)*25, "- MENU DE VENDAS -", chr(847)*25)
             print("Escolha:\n1- Iniciar Venda\n2- Iniciar Compra\n3- Relatorio de Vendas\n"
                   "4- Relatorio de Compras\n0- SAIR")
             opcao = input()
@@ -70,21 +70,25 @@ class Vendas(object):
             print("Lista de Produtos ou Clientes Vazia! Necessita cadastrar\n")
             return 0
         else:
+            print(chr(847)*80)
+            print(chr(847), end="")
             cpf = input("Digite CPF do Cliente: ")
             while not Pessoa.valida_cadastro(cpf):
+                print(chr(847), end="")
                 cpf = input("Digite CPF do Cliente: ")
             for cliente in p.clientes:
                 if cliente.cadastro == cpf:
                     print("Vendendo para: %s\n" % cliente.nome)
                     while novavenda:
+                        print(chr(847), end="")
                         prod = input("Digite o CÓDIGO do produto: ")
                         for produto in e.produtos:
                             if produto.codigo == prod:
-
                                 print(produto.nome, produto.quantidade)
-
+                                print(chr(847), end="")
                                 quant = input("Digite a quantidade: ")
                                 while not Produtos.valida_estoque(quant):
+                                    print(chr(847), end="")
                                     quant = input("Digite a quantidade: ")
                                 quant = int(quant)
                                 if quant <= produto.quantidade:
@@ -137,18 +141,23 @@ class Vendas(object):
             print("Lista de Produtos ou Forncedores Vazia! Necessita cadastrar\n")
             return 0
         else:
+            print(chr(847), end="")
             cpf = input("Digite CNPJ do Fornecedor: ")
             while not Pessoa.valida_cadastro(cpf):
+                print(chr(847), end="")
                 cpf = input("Digite CNPJ do Fornecedor: ")
             for fornecedor in p.fornecedores:
                 if fornecedor.cadastro == cpf:
                     print("Comprando de: %s\n" % fornecedor.nome)
                     while novavenda:
+                        print(chr(847), end="")
                         prod = input("Digite o CÓDIGO do produto: ")
                         for produto in e.produtos:
                             if produto.codigo == prod:  # se produto cadastrado
+                                print(chr(847), end="")
                                 quant = input("Digite a quantidade: ")
                                 while not Produtos.valida_estoque(quant):
+                                    print(chr(847), end="")
                                     quant = input("Digite a quantidade: ")
                                 quant = int(quant)
                                 if quant > produto.estoquemax:  # Se quantidade maior que capacidade de estoque

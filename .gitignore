@@ -45,3 +45,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+src/clientes.vdc
+src/fornecedores.vdc
+*.vdc
+src/categorias.vdc

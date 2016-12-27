@@ -43,7 +43,9 @@ class Estoque(object):
         Cria uma categoria através dos dados recolhidos pelo formulário.
         Os dados são: Codigo, nome e descrição
         """
-        print(chr(847)*25,"- Criar CATEGORIA -",chr(847)*25)
+        print(chr(847)*71)
+        print(chr(847)*25,"- CRIAR CATEGORIA -",chr(847)*25)
+        print(chr(847) * 71)
         print("\n", chr(847), " ", end="")
         codigo = input("CÓDIGO: ").strip()
         print("\n", chr(847), " ", end="")
@@ -69,9 +71,13 @@ class Estoque(object):
             print("Não há categorias registradas!\nVocê deve criar pelo menos uma CATEGORIA!\n")
             # self.create_categoria()
             return 1
+        print("\n", chr(847), " ", end="")
         codigo = input("CÓDIGO: ").strip()
+        print("\n", chr(847), " ", end="")
         nome = input("NOME: ").strip()
+        print("\n", chr(847), " ", end="")
         descrição = input("DESCRIÇÃO: ").strip()
+        print("\n", chr(847), " ", end="")
         escolhe = input("CATEGORIA (Nome ou Código): ")
 
         for cat in self.categorias:
@@ -109,42 +115,46 @@ class Estoque(object):
             print("Produto deve ter CATEGORIA ou uma SUBCATEGORIA!\n")
             self.create_subcategoria()
         else:
-            print("- Cadastrar PRODUTO -")
+            print(chr(847)*25,"- Cadastrar PRODUTO -",chr(847)*25)
+            print("\n", chr(847), " ", end="")
             escolhe = input("SUBCATEGORIA (Nome ou Código): ").lower()
+            print("\n", chr(847), " ", end="")
             codigo = input("CÓDIGO: ").strip()
+            print("\n", chr(847), " ", end="")
             nome = input("NOME: ").strip()
+            print("\n", chr(847), " ", end="")
             descricao = input("DESCRIÇÃO: ").strip()
-
+            print("\n", chr(847), " ", end="")
             estoquemax = input("Quantidade Maxima em Estoque: ")
             while not Produtos.valida_estoque(estoquemax):
                 print("Valor Inválido!")
                 estoquemax = input("Valor deve ser Numérico: ")
             estoquemax = int(estoquemax)
-
+            print("\n", chr(847), " ", end="")
             estoquemin = input("Quantidade Minima em Estoque: ")
             while not Produtos.valida_estoque(estoquemin):
                 print("Valor Inválido!")
                 estoquemin = input("Valor deve ser Numérico: ")
             estoquemin = int(estoquemin)
-
+            print("\n", chr(847), " ", end="")
             quantidade = input("Quantidade Atual em Estoque: ")
             while not Produtos.valida_estoque(quantidade):
                 print("Valor Inválido!")
                 quantidade = input("Valor deve ser Numérico: ")
             quantidade = int(quantidade)
-
+            print("\n", chr(847), " ", end="")
             valorvenda = input("Preço Unitário: ")
             while not Produtos.valida_valorvenda(valorvenda):
                 print("Valor Inválido!")
                 valorvenda = input("Valor deve ser Numérico: ")
             valorvenda = float(valorvenda.replace(",", "."))
-
+            print("\n", chr(847), " ", end="")
             valorcompra = input("Valor de Compra: ")
             while not Produtos.valida_valorvenda(valorcompra):
                 print("Valor Inválido!")
                 valorcompra = input("Valor deve ser Numérico: ")
             valorcompra = float(valorcompra.replace(",", "."))
-
+            print("\n", chr(847), " ", end="")
             foto = input("Arquivo de foto: ")                  # a ideia é receber um objeto file para arquivos de fotos
             # TODO: Criar codigo para tratar imagens
 

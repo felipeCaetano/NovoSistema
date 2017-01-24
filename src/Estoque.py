@@ -205,29 +205,45 @@ class Estoque(object):
             >Lista de Subcategorias Registradas
             >Lista de Produtos Registrados
         """
-        print("Exibindo Estoque\n")
-        if not len(self.categorias):
-            print("Não há Categorias Registradas!\n")
-        else:
-            print("CODIGO\t\tNOME:\t\tDESCRIÇÃO")
-            for categoria in self.categorias:
-                print(categoria)
 
-        if not len(self.subcategorias):
-            print("\nNão há Subcategorias Registradas!\n")
-        else:
-            print("CODIGO\t\tNOME:\t\tCATEGORIA\t\tDESCRIÇÃO")
-            for subcategoria in self.subcategorias:
-                print(subcategoria)
+        print(chr(847) * 18, "- Sistema de Vendas ao Consumidor -", chr(847) * 18)
+        print(chr(847) * 25, "- CONSULTAR ESTOQUE -", chr(847) * 25)
+        print("Escolha:\n1- Consultar Produtos\n2- Consultar Categoria\n3- Consultar Sub-Categoria\n0- SAIR")
+        opcao = input()
 
-        if not len(self.produtos):
-            print("Não há Produtos Registrados!\n")
-        else:
-            for produto in self.produtos:
-                if produto == self.produtos[len(self.produtos)-1]:
-                    print(produto)
+        while not self.valida_opcao(opcao,"0123"):
+            print("Opção Inválida!")
+            opcao = input()
+        while opcao:
+            if opcao == '1':
+                if not len(self.produtos):
+                    print("Não há Produtos Registrados!\n")
+                    break
                 else:
-                    print(produto, end=" ")
+                    for produto in self.produtos:
+                        if produto == self.produtos[len(self.produtos) - 1]:
+                            print(produto)
+                        else:
+                            print(produto, end=" ")
+                    break
+            elif opcao == '2':
+                if not len(self.categorias):
+                    print("Não há Categorias Registradas!\n")
+                    break
+                else:
+                    print("CODIGO\t\tNOME:\t\tDESCRIÇÃO")
+                    for categoria in self.categorias:
+                        print(categoria)
+                    break
+            elif opcao == '3':
+                if not len(self.subcategorias):
+                    print("\nNão há Subcategorias Registradas!\n")
+                    break
+                else:
+                    print("CODIGO\t\tNOME:\t\tCATEGORIA\t\tDESCRIÇÃO")
+                    for subcategoria in self.subcategorias:
+                        print(subcategoria)
+                    break
 
     def altera_item(self):      # altera um item disponivel no estoque
         """
@@ -243,7 +259,7 @@ class Estoque(object):
             print(chr(847),"1- Alterar uma categoria\n",chr(847),"2- Alterar uma Subcategoria\n",chr(847),"3- Alterar um produto\n",chr(847),"0 - SAIR")
             opcao = input()
 
-            while not self.valida_opcao(opcao):
+            while not self.valida_opcao(opcao,"0123"):
                 print("Opção Inválida!")
                 opcao = input()
 
@@ -427,7 +443,7 @@ class Estoque(object):
             print(chr(847)*25,"- Menu Adicionar -",chr(847)*25)
             print("\n1 - Adicionar Categoria\n2 - Adicionar Subcategoria\n3 - Adicionar Produtos\n0 - Sair")
             opcao = input()
-            while not self.valida_opcao(opcao):
+            while not self.valida_opcao(opcao,"0123"):
                 print("Opção Inválida!")
                 opcao = input()
             if opcao == '1':
@@ -448,7 +464,7 @@ class Estoque(object):
             print("\n1 - Consultar Estoque\n2 - Adicionar\n3 - Remover\n4 - Alterar\n0 - SAIR")
             opcao = input()
 
-            while not self.valida_opcao(opcao):
+            while not self.valida_opcao(opcao,"01234"):
                 print("Opção Inválida!")
                 opcao = input()
 
@@ -463,8 +479,8 @@ class Estoque(object):
             elif opcao == '0':
                 break
 
-    def valida_opcao(self, opcao):
-        if opcao.isdigit() and opcao in "01234":
+    def valida_opcao(self, opcao,options):
+        if opcao.isdigit() and opcao in options:
             return True
         else:
             return False

@@ -31,7 +31,7 @@ class Vendas(object):
         self.vendidos = []
         self.comprados = []
 
-    def menu_vendas(self):
+    def menu_vendas(self, estoque, pessoas):
         while True:
             print(chr(847)*25, "- Sistema de Vendas ao Consumidor -", chr(847)*25)
             print(chr(847)*25, "- MENU DE VENDAS -", chr(847)*25)
@@ -44,9 +44,9 @@ class Vendas(object):
                 opcao = input()
 
             if opcao == '1':
-                self.vender(e, p)
+                self.vender(estoque, pessoas)
             elif opcao == '2':
-                self.comprar(e, p)
+                self.comprar(estoque, pessoas)
             elif opcao == '3':
                 self.relatorio_venda()
             elif opcao == '4':
@@ -77,6 +77,8 @@ class Vendas(object):
                 print(chr(847), end="")
                 cpf = input("Digite CPF do Cliente: ")
             for cliente in p.clientes:
+                cpfcadastrado = cliente.cadastro
+
                 if cliente.cadastro == cpf:
                     print("Vendendo para: %s\n" % cliente.nome)
                     while novavenda:
@@ -281,8 +283,10 @@ class Vendas(object):
         else:
             return dinheiro - total
 
-
-e = Estoque()
-p = Pessoas()
-v = Vendas()
-v.menu_vendas()
+'''
+if __name__ != "__main__":
+    e = Estoque()
+    p = Pessoas()
+    v = Vendas()
+   # v.menu_vendas()
+'''

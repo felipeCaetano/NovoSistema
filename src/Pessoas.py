@@ -5,7 +5,10 @@ Possui funções definidas na especificação
 """
 
 from clientes import *
+from funcionalidades import valida_cadastro
 import pickle
+
+from src import funcionalidades
 
 
 class Pessoas(object):
@@ -16,13 +19,13 @@ class Pessoas(object):
         self.fornecedores = []
         self.funcionarios = []
         self.load()
-        self.menu_pessoas()
+        # self.menu_pessoas()
 
     def menu_pessoas(self):
         while True:
-            print("||||||| *** Sistema de Vendas ao Consumidor *** |||||||")
-            print("****** MENU DE PESSOAS *****")
-            print("Digite Ação!\n1 - Consultar Cadastro\n2 - Adicionar\n3 - Remover\n4 - Alterar\n0 - SAIR")
+            print(chr(847)*25, "Sistema de Vendas ao Consumidor", chr(847)*25)
+            print(chr(847)*25, "MENU DE PESSOAS".center(31), chr(847)*25, )
+            print("Escolha:\n1 - Consultar Cadastro\n2 - Adicionar\n3 - Remover\n4 - Alterar\n0 - SAIR")
             opcao = input()
 
             while not self.valida_opcao(opcao, "01234"):
@@ -48,34 +51,33 @@ class Pessoas(object):
 
     def load(self):
         try:
-            with open('clientes.vdc', 'wb') as arquivo_clientes:
-                pickle.dump(self.clientes, arquivo_clientes)
+            with open('clientes.vdc', 'rb') as arquivo_clientes:
+                self.clientes = pickle.load(arquivo_clientes)
         except FileNotFoundError:
             self.clientes = []
         try:
-            with open('fornecedores.vdc', 'wb') as arquivo_fornecedores:
-                pickle.dump(self.fornecedores, arquivo_fornecedores)
+            with open('fornecedores.vdc', 'rb') as arquivo_fornecedores:
+                self.fornecedores = pickle.load(arquivo_fornecedores)
         except FileNotFoundError:
             self.fornecedores = []
         try:
-            with open('funcionarios.vdc', 'wb') as arquivo_funcionarios:
-                pickle.dump(self.funcionarios, arquivo_funcionarios)
+            with open('funcionarios.vdc', 'rb') as arquivo_funcionarios:
+                self.funcionarios = pickle.load(arquivo_funcionarios)
         except FileNotFoundError:
             self.funcionarios = []
 
     # metodos pra salvar os objetos em disco
     def save_clientes(self):
-        with open('clientes.vdc','wb') as arquivo_clientes:
+        with open('clientes.vdc', 'wb') as arquivo_clientes:
             pickle.dump(self.clientes, arquivo_clientes)
 
     def save_fornecedores(self):
-        with open('fornecedores.vdc','wb') as arquivo_fornecedores:
+        with open('fornecedores.vdc', 'wb') as arquivo_fornecedores:
             pickle.dump(self.fornecedores, arquivo_fornecedores)
 
     def save_funcionarios(self):
-        with open('funcionarios.vdc','wb') as arquivo_funcionarios:
+        with open('funcionarios.vdc', 'wb') as arquivo_funcionarios:
             pickle.dump(self.funcionarios, arquivo_funcionarios)
-
 
     # funções pedidas na especificação
 
@@ -83,7 +85,7 @@ class Pessoas(object):
         while True:
             
             print(chr(847)*25, "- Sistema de Vendas ao Consumidor -", chr(847)*25)
-            print(chr(847)*25, "- CRIAR NOVO -", chr(847)*25)
+            print(chr(847)*25, "- CRIAR NOVO -".center(35), chr(847)*25)
             print("Escolha:\n1 - Novo Cliente\n2 - Novo Funcionário \n3 - Novo Fornecedor\n0 - SAIR")
             opcao = input()
 
@@ -105,8 +107,9 @@ class Pessoas(object):
     def novo_cliente(self):
         print(chr(847)*50)
         print(chr(847), end="")
+        print("Inisira o CPF - ex. xxx.xxx.xxx-xx")
         cadastro = input("CPF: ")
-        while not Pessoa.valida_cadastro(cadastro):
+        while not funcionalidades.valida_cadastro(cadastro):    # Pessoa.valida_cadastro(cadastro):
             print(chr(847), end="")
             cadastro = input("CPF: ")
         if len(self.clientes):
@@ -248,10 +251,13 @@ class Pessoas(object):
         while not Funcionario.valida_data(data):
             data = input("DATA DE NASCIMENTO(dd/mm/aaaa): ")
 
-        funcionario = Funcionario(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, data, gerente)
+        funcionario = Funcionario(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro,
+                                  data, gerente)
 
         if funcionario not in self.funcionarios:
             self.funcionarios.append(funcionario)
+            self.save_funcionarios()
+            # TODO: Criar uma unica função save em funcionalidades
             print("\nFuncionário Cadastrado com SUCESSO!!")
 
     def novo_fornecedor(self):
@@ -310,6 +316,7 @@ class Pessoas(object):
 
         if fornecedor not in self.fornecedores:
             self.fornecedores.append(fornecedor)
+            self.save_fornecedores()
             print("\nFornecedor Cadastrado com SUCESSO!!")
 
     def alterar(self):
@@ -807,33 +814,47 @@ class Pessoas(object):
                     >Lista de fornecedores
                 """
         # TODO : Uma forma melhor de exibir na tela as informações
-        print("Exibindo PESSOAS\n")
-        if not len(self.clientes):
-            print("Não há Clientes Registrados!\n")
-        else:
-            print("CLIENTES CADASTRADOS")
-            print("CPF\t\t\tNOME:\t\t\t\t\tTELEFONE\t\tEMAIL")
-            for cliente in self.clientes:
-                print(cliente.cadastro, cliente.nome, cliente.telefone, cliente.email)
-                print()
 
-        if not len(self.funcionarios):
-            print("\nNão há Funcionários Registrados!\n")
-        else:
-            print("FUNCIONÁRIOS CADASTRADOS")
-            print("CPF\t\t\tNOME:\t\t\t\t\tTELEFONE\t\tEMAIL")
-            for funcionario in self.funcionarios:
-                print(funcionario.cadastro, funcionario.nome, funcionario.telefone, funcionario.email)
-                print()
+        print(chr(847) * 18, "- Sistema de Vendas ao Consumidor -", chr(847) * 18)
+        print(chr(847) * 25, "- CONSULTAR PESSOAS -", chr(847) * 25)
+        print("Escolha:\n1- Consultar Clientes\n2- Consultar Fornecedores\n3- Consultar Empregados\n0- SAIR")
+        opcao = input()
 
-        if not len(self.fornecedores):
-            print("Não há Fornecedores Registrados!\n")
-        else:
-            print("FORNECEDORES CADASTRADOS:")
-            print("CNPJ\t\t\t\tNOME:\t\t\t\t\tTELEFONE\t\tEMAIL")
-            for forncedor in self.fornecedores:
-                print(forncedor.cadastro, forncedor.nome, forncedor.telefone, forncedor.email)
-                print()
-
-# p = Pessoas()
-# p.menu_pessoas()
+        while not self.valida_opcao(opcao, "0123"):
+            print("Opção Inválida!")
+            opcao = input()
+        while opcao:
+            if opcao == '1':
+                if not len(self.clientes):
+                    print("Não há Clientes Registrados!\n")
+                    break
+                else:
+                    print("\nCLIENTES CADASTRADOS")
+                    print("CPF", "NOME:".rjust(15), "TELEFONE".rjust(35), "EMAIL".rjust(15))
+                    for cliente in self.clientes:
+                        print(cliente.cadastro, cliente.nome.rjust(13), cliente.telefone.rjust(33),
+                              cliente.email.rjust(27))
+                    break
+            elif opcao == '3':
+                if not len(self.funcionarios):
+                    print("\nNão há Funcionários Registrados!\n")
+                    break
+                else:
+                    print("FUNCIONÁRIOS CADASTRADOS\n")
+                    print("CPF", "NOME:".rjust(17), "TELEFONE".rjust(35), "EMAIL".rjust(15))
+                    for funcionario in self.funcionarios:
+                        print(funcionario.cadastro, funcionario.nome.rjust(13), funcionario.telefone.rjust(33),
+                              funcionario.email.rjust(27))
+                    break
+            elif opcao == '2':
+                if not len(self.fornecedores):
+                    print("Não há Fornecedores Registrados!\n")
+                    break
+                else:
+                    print("\nFORNECEDORES CADASTRADOS:\n")
+                    print("CNPJ", "NOME:".rjust(15), "TELEFONE".rjust(35), "EMAIL".rjust(15))
+                    for forncedor in self.fornecedores:
+                        print(forncedor.cadastro, forncedor.nome.rjust(15), forncedor.telefone.rjust(33),
+                              forncedor.email.rjust(27))
+                    break
+            elif opcao == '0':  break

@@ -2,6 +2,8 @@
 # _*_ coding: utf-8 _*_
 # Cadastro de clientes, fornecedores e funcionários
 
+LOGINMAXLENGTH = 9
+
 
 class Pessoa(object):
     def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro):
@@ -195,9 +197,11 @@ class Pessoa(object):
             return True
         end = endereco.strip()
         end = end.split()
-        if end[0] not in ['Al.', 'Alameda', 'Rua', 'Dsc.', 'Descida', 'Aveninda', 'R.', 'Av.', 'Ld.', 'Ladeira', 'Estrada', 'Travessa', 'Trav.', 'Est.', 'Beco']:
+        if end[0] not in ['Al.', 'Alameda', 'Rua', 'Dsc.', 'Descida', 'Aveninda', 'R.', 'Av.', 'Ld.', 'Ladeira',
+                          'Estrada', 'Travessa', 'Trav.', 'Est.', 'Beco']:
                 print("Inisira LOGRADOURO VÁLIDO!")
-                print(sorted(['Al.', 'Alameda', 'Rua', 'Dsc.', 'Descida', 'Aveninda', 'R.', 'Av.', 'Ld.', 'Ladeira', 'Estrada', 'Travessa', 'Trav.', 'Est.', 'Beco']))
+                print(sorted(['Al.', 'Alameda', 'Rua', 'Dsc.', 'Descida', 'Aveninda', 'R.', 'Av.', 'Ld.', 'Ladeira',
+                              'Estrada', 'Travessa', 'Trav.', 'Est.', 'Beco']))
                 return False
         else:
             return True
@@ -443,15 +447,18 @@ class Cliente(Pessoa):
 class Fornecedor(Pessoa):
     # fornecedor tem cnpj
     def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, cadastro):
-        super(Fornecedor, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, 111111, cadastro)
+        super(Fornecedor, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, 111111,
+                                         cadastro)
 
 
 class Funcionario(Pessoa):
     # TODO: cliente tem foto
     logins_list = []
 
-    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc, gerente):
-        super(Funcionario, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
+    def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc,
+                 gerente):
+        super(Funcionario, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg,
+                                          cadastro)
         self.__datanasc = datanasc
         self.__login = self.create_login(nome)
         self.__pass = self.set_password()
@@ -470,7 +477,7 @@ class Funcionario(Pessoa):
         :param nome: nome do funcionário
         :return: LOGIN do funcionário
         """
-        LOGINMAXLENGTH = 9
+
         login = ""
         lista = nome.split()
 
@@ -545,7 +552,8 @@ class Funcionario(Pessoa):
             print("Status ERROR - Deve ser fornecido o nivel de acesso ao sistema!")
             return False
         else:
-            if gerente.lower() == 's' or gerente.lower() == 'sim' or gerente.lower() == 'n' or gerente.lower() == 'nao' or gerente.lower() == 'não':
+            if gerente.lower() == 's' or gerente.lower() == 'sim' or gerente.lower() == 'n' or gerente.lower() == 'nao'\
+                    or gerente.lower() == 'não':
                 return True
             else:
                 print("Opção Inválida! Digite Somente S ou N")

@@ -51,7 +51,7 @@ class Categoria(object):
 
 class Subcategoria(Categoria):
     def __init__(self, categoria, codigo, nome, descricao):
-        # TODO: Chamar SuperClasse?
+        super(Subcategoria, self).__init__(codigo, nome, descricao)
         self.cat = categoria
         self.codigo = codigo
         self.nome = nome
@@ -67,7 +67,8 @@ class Produtos(object):
     Produto apresenta atributos relativos a caracterização e descrição de um produto
     >Impelementados: Inicializador, getters, setters e validadores
     """
-    def __init__(self, subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda, valorcompra, foto):
+    def __init__(self, subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda,
+                 valorcompra, foto):
         self._sub = subcategoria
         self._codigo = codigo
         self._nome = nome
@@ -241,4 +242,5 @@ class Produtos(object):
                 return False
 
     def __str__(self):
+        # TODO: Implementar forma padrão de visualizaç
         return str(self.__dict__)

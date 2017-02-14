@@ -49,3 +49,5 @@ src/clientes.vdc
 src/fornecedores.vdc
 *.vdc
 src/categorias.vdc
+.idea/encodings.xml
+.idea/codeStyleSettings.xml

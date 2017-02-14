@@ -1,13 +1,14 @@
 from produtos import *
 import pickle
 
+
 class Estoque(object):
     def __init__(self):
         self.categorias = []
         self.subcategorias = []
         self.produtos = []
         self.load()
-        self.menu_estoque()
+        # self.menu_estoque()
 
     def load(self):
         try:
@@ -16,26 +17,26 @@ class Estoque(object):
         except FileNotFoundError:
             self.categorias = []
         try:
-            with open('subcategorias.vdc','rb') as arquivo_subcategorias:
+            with open('subcategorias.vdc', 'rb') as arquivo_subcategorias:
                 self.subcategorias = pickle.load(arquivo_subcategorias)
         except FileNotFoundError:
             self.subcategorias = []
         try:
-            with open('produtos.vdc','rb') as arquivo_produtos:
+            with open('produtos.vdc', 'rb') as arquivo_produtos:
                 self.produtos = pickle.load(arquivo_produtos)
         except FileNotFoundError:
             self.produtos = []
 
     def save_categoria(self):
-        with open('categorias.vdc','wb') as arquivo_categorias:
+        with open('categorias.vdc', 'wb') as arquivo_categorias:
             pickle.dump(self.categorias, arquivo_categorias)
 
     def save_subcategorias(self):
-        with open('subcategorias.vdc','wb') as arquivo_subcategorias:
+        with open('subcategorias.vdc', 'wb') as arquivo_subcategorias:
             pickle.dump(self.subcategorias, arquivo_subcategorias)
 
     def save_produtos(self):
-        with open('produtos.vdc','wb') as arquivo_produtos:
+        with open('produtos.vdc', 'wb') as arquivo_produtos:
             pickle.dump(self.produtos, arquivo_produtos)
 
     def create_categoria(self):
@@ -44,7 +45,7 @@ class Estoque(object):
         Os dados são: Codigo, nome e descrição
         """
         print(chr(847)*71)
-        print(chr(847)*25,"- CRIAR CATEGORIA -",chr(847)*25)
+        print(chr(847)*25, "- CRIAR CATEGORIA -", chr(847)*25)
         print(chr(847) * 71)
         print("\n", chr(847), " ", end="")
         codigo = input("CÓDIGO: ").strip()
@@ -66,7 +67,7 @@ class Estoque(object):
         Cria uma categoria através dos dados recolhidos pelo formulário.
         Os dados são: Codigo, nome e descrição e a passagem de um objeto categoria
         """
-        print(chr(847)*25,"- CRIAR SUBCATEGORIA -",chr(847)*25)
+        print(chr(847)*25, "- CRIAR SUBCATEGORIA -", chr(847)*25)
         if len(self.categorias) == 0:
             print("Não há categorias registradas!\nVocê deve criar pelo menos uma CATEGORIA!\n")
             # self.create_categoria()
@@ -115,7 +116,7 @@ class Estoque(object):
             print("Produto deve ter CATEGORIA ou uma SUBCATEGORIA!\n")
             self.create_subcategoria()
         else:
-            print(chr(847)*25,"- Cadastrar PRODUTO -",chr(847)*25)
+            print(chr(847)*25, "- Cadastrar PRODUTO -", chr(847)*25)
             print("\n", chr(847), " ", end="")
             escolhe = input("SUBCATEGORIA (Nome ou Código): ").lower()
             print("\n", chr(847), " ", end="")
@@ -171,7 +172,8 @@ class Estoque(object):
             else:
                 self.create_produto()
 
-        produto = Produtos(subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda, valorcompra, foto)
+        produto = Produtos(subcategoria, codigo, nome, descricao, estoquemax, estoquemin, quantidade, valorvenda,
+                           valorcompra, foto)
 
         if produto not in self.produtos:
             self.produtos.append(produto)
@@ -211,7 +213,7 @@ class Estoque(object):
         print("Escolha:\n1- Consultar Produtos\n2- Consultar Categoria\n3- Consultar Sub-Categoria\n0- SAIR")
         opcao = input()
 
-        while not self.valida_opcao(opcao,"0123"):
+        while not self.valida_opcao(opcao, "0123"):
             print("Opção Inválida!")
             opcao = input()
         while opcao:
@@ -255,11 +257,12 @@ class Estoque(object):
         :return: objeto escolhido alterado.
         """
         while True:
-            print(chr(847)*15,"Escolha o Item que deseja ALTERAR",chr(847)*15)
-            print(chr(847),"1- Alterar uma categoria\n",chr(847),"2- Alterar uma Subcategoria\n",chr(847),"3- Alterar um produto\n",chr(847),"0 - SAIR")
+            print(chr(847)*15, "Escolha o Item que deseja ALTERAR", chr(847)*15)
+            print(chr(847), "1- Alterar uma categoria\n", chr(847), "2- Alterar uma Subcategoria\n", chr(847),
+                  "3- Alterar um produto\n", chr(847), "0 - SAIR")
             opcao = input()
 
-            while not self.valida_opcao(opcao,"0123"):
+            while not self.valida_opcao(opcao, "0123"):
                 print("Opção Inválida!")
                 opcao = input()
 
@@ -293,7 +296,6 @@ class Estoque(object):
                             print("Codigo não encontrado!\n")
 
                     self.save_categoria()
-
 
             elif opcao == '2':
                 if not len(self.subcategorias):
@@ -378,7 +380,7 @@ class Estoque(object):
 
             opcao = input()
 
-            while not self.valida_opcao(opcao):
+            while not self.valida_opcao(opcao, "0123"):
                 print("Opção Inválida!")
                 opcao = input()
 
@@ -399,7 +401,6 @@ class Estoque(object):
                         else:
                             print("Codigo não encontrado!\n")
 
-
             elif opcao == '2':
                 if not len(self.subcategorias):
                     print("Não há Subategorias Registradas!\n")
@@ -416,7 +417,6 @@ class Estoque(object):
                             break
                         else:
                             print("Codigo não encontrado!\n")
-
 
             elif opcao == '3':
                 if not len(self.produtos):
@@ -440,10 +440,10 @@ class Estoque(object):
     def adiciona_item(self):     # adiciona novo item ao estoque
         print("Adicionando item ao estoque")
         while 1:
-            print(chr(847)*25,"- Menu Adicionar -",chr(847)*25)
+            print(chr(847)*25, "- Menu Adicionar -", chr(847)*25)
             print("\n1 - Adicionar Categoria\n2 - Adicionar Subcategoria\n3 - Adicionar Produtos\n0 - Sair")
             opcao = input()
-            while not self.valida_opcao(opcao,"0123"):
+            while not self.valida_opcao(opcao, "0123"):
                 print("Opção Inválida!")
                 opcao = input()
             if opcao == '1':
@@ -464,7 +464,7 @@ class Estoque(object):
             print("\n1 - Consultar Estoque\n2 - Adicionar\n3 - Remover\n4 - Alterar\n0 - SAIR")
             opcao = input()
 
-            while not self.valida_opcao(opcao,"01234"):
+            while not self.valida_opcao(opcao, "01234"):
                 print("Opção Inválida!")
                 opcao = input()
 
@@ -479,7 +479,7 @@ class Estoque(object):
             elif opcao == '0':
                 break
 
-    def valida_opcao(self, opcao,options):
+    def valida_opcao(self, opcao, options):
         if opcao.isdigit() and opcao in options:
             return True
         else:

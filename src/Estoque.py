@@ -38,6 +38,7 @@ class Estoque(object):
     def save_produtos(self):
         with open('produtos.vdc', 'wb') as arquivo_produtos:
             pickle.dump(self.produtos, arquivo_produtos)
+        self.low_stock_alarm()
 
     def create_categoria(self):
         """"
@@ -192,12 +193,11 @@ class Estoque(object):
             :return: produtos com estoque baixo
         """
         if len(self.produtos):
-            print("\n**********Lista de Produtos com estoque abaixo do Minimo: **********")
+            # print("\n**********Lista de Produtos com estoque abaixo do Minimo: **********")
             for produto in self.produtos:
-                if produto.quantida <= produto.estoquemin:
-                    print("%s em quantidade baixa! Abaixo de %d" % (produto.nome, produto.estoquemin))
-            else:
-                print("Os produtos não listados não precisam de reposições no momento.")
+                if produto.quantidade <= produto.estoquemin:
+                    pr1int("\n\n -ATENÇÃO!")
+                    print("%s em quantidade baixa! Abaixo de %d\n\n" % (produto.nome, produto.estoquemin))
 
     def consulta_estoque(self):                                                     # exibe itens disponiveis no estoque
         """"
@@ -356,7 +356,7 @@ class Estoque(object):
                                 produto.descricao = descricao
                         else:
                             print("Codigo não encontrado!\n")
-
+                    print("\nProduto Alterado com Sucesso!\n")
                     self.save_produtos()
 
             elif opcao == '0':

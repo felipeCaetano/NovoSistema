@@ -61,6 +61,13 @@ class Vendas(object):
             return False
 
     def vender(self, e, p):
+        '''
+        digite cpf ou nome do cliente para inciar a venda
+        caso seja digitado o nome: o sistema deve recuperar o cpf da lista de clientes com o mesmo nome
+        :param e: objeto estoque
+        :param p: objeto pessoas
+        :return: none
+        '''
 
         listadecompras = []
         total = 0
@@ -73,12 +80,16 @@ class Vendas(object):
             print(chr(847)*80)
             print(chr(847), end="")
             cpf = input("Digite CPF do Cliente: ")
-            while not Pessoa.valida_cadastro(cpf):
-                print(chr(847), end="")
-                cpf = input("Digite CPF do Cliente: ")
-            for cliente in p.clientes:
-                cpfcadastrado = cliente.cadastro
+            if cpf:
+                while not funcionalidades.valida_cadastro(cpf):
+                    print(chr(847), end="")
+                    cpf = input("Digite CPF do Cliente: ")
+                cpf = funcionalidades.remove_caracter(cpf)
+            else:
+                nome = input("Digite Nome do Cliente: ")
 
+            for cliente in p.clientes:
+                cliente.cadastro = funcionalidades.remove_caracter(cliente.cadastro)
                 if cliente.cadastro == cpf:
                     print("Vendendo para: %s\n" % cliente.nome)
                     while novavenda:
@@ -113,6 +124,8 @@ class Vendas(object):
                     choice = self.valida_yesorno(op)
                     if choice:
                         self.pagamento(total, listadecompras, cliente)
+                        e.save_produtos()
+                        cliente.ativo = True
                         break
                     else:
                         print("Venda Cancelada!")
@@ -172,7 +185,7 @@ class Vendas(object):
                                     if valor > produto.vbcompra:  # se valor do forncedor for maior q o valor pagavel
                                         print("Valor alto para compra!")
                                         op = input("Deseja continuar(S/N): ")
-                                        while self.valida_yesorno(op):
+                                        while not self.valida_yesorno(op):
                                             op = input("Deseja continuar(S/N): ")
                                         if op.lower() == 's' or op.lower() == 'sim':
                                             preco = quant * valor

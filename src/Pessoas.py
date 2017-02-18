@@ -764,9 +764,12 @@ class Pessoas(object):
                     for cliente in self.clientes:
                         if cliente.cadastro == opcao:
                             index = self.clientes.index(cliente)
-                            del self.clientes[index]
-                            print("Item Removido com Sucesso!")
-                            break
+                            if not cliente.ativo:
+                                del self.clientes[index]
+                                print("Item Removido com Sucesso!")
+                                break
+                            elif cliente.ativo:
+                                print("Impossível remover Cliente Ativo!!")
                         else:
                             print("Cliente não encontrado!\n")
 

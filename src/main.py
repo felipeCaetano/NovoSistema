@@ -31,12 +31,15 @@ def get_weekday():
     print(today, end="\n")
 
 
-def main_menu(vendas, estoque, pessoas):
+def main_menu(vendas, estoque, pessoas, acess = True):
     while 1:
         print(chr(847) * 18, "- SISTEMA DE VENDA AO CONSUMIDOR -", chr(847) * 18)
+        print("Nome:",(Loja.fantasia).ljust(1), end="")
+        print("CNPJ: ".rjust(40),(Loja.cadastro))
+        get_weekday()
         print(chr(847) * 18, "- MENU INICIAL -".center(34), chr(847) * 18)
         # pegando a data:
-        get_weekday()
+
         print("\nESCOLHA A FUNÇÃO:\n1- VENDER\t\t\t\t\t\t5- CONTROLE DE PESSOAL\n2- COMPRAR\t\t\t\t\t\t"
               "6- CONTROLE DE ESTOQUE\n3- RELATORIO DE VENDAS\t\t\t7- LOJA\n4- RELATORIO DE COMPRAS\t\t\t8- AJUDA\n"
               "0- SAIR")
@@ -45,21 +48,26 @@ def main_menu(vendas, estoque, pessoas):
             print("Opção Inválida!\n")
             op = input()
         if op == '1':
-            vendas.menu_vendas(estoque, pessoas)
-        elif op == '2':
-            vendas.comprar(estoque, pessoas)
-        elif op == '3':
-            vendas.relatorio_venda()
-        elif op == '4':
-            vendas.relatorio_compra()
-        elif op == '5':
-            pessoas.menu_pessoas()
-        elif op == '6':
-            estoque.menu_estoque()
+            vendas.vender(estoque, pessoas)
         elif op == '0':
             break
+
+        if acess:
+            if op == '2':
+                vendas.comprar(estoque, pessoas)
+            elif op == '3':
+                vendas.relatorio_venda()
+            elif op == '4':
+                vendas.relatorio_compra()
+            elif op == '5':
+                pessoas.menu_pessoas()
+            elif op == '6':
+                estoque.menu_estoque()
         else:
-            print("Escolheu outra coisa")
+            print("Menu Indisponível! -> Você não tem privilégios suficientes.")
+
+def login():
+    print()
 
 
 def main():
@@ -68,8 +76,8 @@ def main():
     e = Estoque()
     p = Pessoas()
 
-
-    main_menu(v, e, p)
+    # TODO: Chamar login e senha do usuário do sistema
+    main_menu(v, e, p)  # colocar atributo de acesso.
 
 if __name__ == "__main__":
     main()

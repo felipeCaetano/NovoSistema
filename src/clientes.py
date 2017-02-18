@@ -20,6 +20,7 @@ class Pessoa(object):
         self.__email = email
         self.__rg = rg
         self.__cadastro = cadastro
+        self.ativo = False
 
 # metodos getters e setters
 
@@ -501,6 +502,7 @@ class Funcionario(Pessoa):
 
         :return: senha do usuário
         """
+        # TODO: Colocar modulo de senha do python
         senha1 = ""
         while not len(senha1) == 8:
             print("Defina sua SENHA com 8 caracteres:\n")

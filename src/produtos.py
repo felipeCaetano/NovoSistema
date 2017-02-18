@@ -100,7 +100,7 @@ class Produtos(object):
 
     @codigo.setter
     def codigo(self, value):
-        self.codigo = value
+        self._codigo = value
 
     @codigo.deleter
     def codigo(self):

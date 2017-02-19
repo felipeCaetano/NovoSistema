@@ -37,21 +37,22 @@ class Vendas(object):
             print(chr(847)*25, "- MENU DE VENDAS -", chr(847)*25)
             print("Escolha:\n1- Iniciar Venda\n2- Iniciar Compra\n3- Relatorio de Vendas\n"
                   "4- Relatorio de Compras\n0- SAIR")
-            opcao = input()
 
+            opcao = input()
             while not self.valida_opcao(opcao):
                 print("Opção Inválida!")
                 opcao = input()
+            opcao = int(opcao)
 
-            if opcao == '1':
+            if opcao == 1:
                 self.vender(estoque, pessoas)
-            elif opcao == '2':
+            elif opcao == 2:
                 self.comprar(estoque, pessoas)
-            elif opcao == '3':
+            elif opcao == 3:
                 self.relatorio_venda()
-            elif opcao == '4':
+            elif opcao == 4:
                 self.relatorio_compra()
-            elif opcao == '0':
+            elif opcao == 0:
                 break
 
     def valida_opcao(self, opcao):
@@ -140,7 +141,7 @@ class Vendas(object):
 
     def valida_yesorno(self, op):
         if op.lower() == 'n' or op.lower() == 'não' or op.lower() == 'nao':
-            return False
+            return True
         elif op.lower() == 's' or op.lower() == 'sim':
             return True
         else:
@@ -157,75 +158,110 @@ class Vendas(object):
             return 0
         else:
             print(chr(847), end="")
-            cpf = input("Digite CNPJ do Fornecedor: ")
+            cpf = input(" Digite CNPJ do Fornecedor: ")
             while not Pessoa.valida_cadastro(cpf):
                 print(chr(847), end="")
-                cpf = input("Digite CNPJ do Fornecedor: ")
+                cpf = input(" Digite CNPJ do Fornecedor: ")
             for fornecedor in p.fornecedores:
                 if fornecedor.cadastro == cpf:
                     print("Comprando de: %s\n" % fornecedor.nome)
                     while novavenda:
                         print(chr(847), end="")
-                        prod = input("Digite o CÓDIGO do produto: ")
+                        prod = input(" Digite o CÓDIGO do produto: ")
                         for produto in e.produtos:
                             if produto.codigo == prod:  # se produto cadastrado
                                 print(chr(847), end="")
-                                quant = input("Digite a quantidade: ")
+                                quant = input(" Digite a quantidade: ")
                                 while not Produtos.valida_estoque(quant):
                                     print(chr(847), end="")
-                                    quant = input("Digite a quantidade: ")
-                                quant = int(quant)
-                                if quant > produto.estoquemax:  # Se quantidade maior que capacidade de estoque
-                                    print("Quantidade excede limite para estoque!\n")
-                                elif quant <= produto.estoquemax:
-                                    valor = input("Digite o preço para compra: ")
-                                    while not Produtos.valida_valorvenda(valor):
-                                        valor = input("Digite o preço para compra: ")
-                                    valor = float(valor)
-                                    if valor > produto.vbcompra:  # se valor do forncedor for maior q o valor pagavel
-                                        print("Valor alto para compra!")
+                                    quant = input(" Digite a quantidade: ")
+                                if int(quant) + produto.quantidade > produto.estoquemax:  # Se quantidade maior que capacidade de estoque
+                                    print("\nATENÇÃO! Quantidade excede limite MÁXIMO para estoque.\n")
+                                    print("Limite: %d\t\tQuantidade Atual: %d" % (produto.estoquemax, produto.quantidade))
+                                elif int(quant) + produto.quantidade < produto.estoquemin:
+                                    print("\nATENÇÃO! Quantidade final menor que limite MÍNIMO para estoque.\n")
+                                    print("Limite: %d\t\tQuantidade Atual: %d"  % (produto.estoquemin, produto.quantidade))
+                                op = input("Deseja continuar(S/N): ")
+                                while not self.valida_yesorno(op):
+                                    op = input("Deseja continuar(S/N): ")
+                                if op.lower() == 's' or op.lower() == 'sim':
+                                    quant = int(quant)
+                                else:
+                                    print(chr(847), end="")
+                                    quant = input(" Digite a quantidade: ")
+                                    while not Produtos.valida_estoque(quant):
+                                        print(chr(847), end="")
+                                        quant = input(" Digite a quantidade: ")
+                                        # TODO: Criar uma fumção para verificar se a entrada está acima ou abaixo do limite
+                                    quant = int(quant)
+                                print(chr(847), end="")
+                                valor = input(" Digite o preço para compra: ")
+                                while not Produtos.valida_valorvenda(valor):
+                                    print(chr(847), end="")
+                                    valor = input(" Digite o preço para compra: ")
+                                valor = float(valor)
+                                if valor > produto.vbcompra:  # se valor do forncedor for maior q o valor pagavel
+                                    print("\nATENÇÃO! Valor alto para compra.\n")
+                                    op = input("Deseja continuar(S/N): ")
+                                    while not self.valida_yesorno(op):
                                         op = input("Deseja continuar(S/N): ")
-                                        while not self.valida_yesorno(op):
-                                            op = input("Deseja continuar(S/N): ")
-                                        if op.lower() == 's' or op.lower() == 'sim':
-                                            preco = quant * valor
-                                            total += preco
-                                            listadecompras.append([produto.codigo, produto.nome, quant, preco])
-                                            for item in listadecompras:
-                                                print(
-                                                    "%s: %s %d valor: R$ %.2f\n" % (item[0], item[1], item[2], item[3]))
-                                                print("TOTAL: R$%.2f" % total)
-                                                op = input("Novo Item? (S/N): ")
-                                                novavenda = self.valida_yesorno(op)
-                                        elif op.lower() == 'n' or op.lower() == 'nao' or op.lower() == 'não':
-                                            return 1
-                                    else:
+                                    if op.lower() == 's' or op.lower() == 'sim':
                                         preco = quant * valor
                                         total += preco
                                         listadecompras.append([produto.codigo, produto.nome, quant, preco])
+                                        # TODO: Criar uma função para gerar uma saida padrão (cupom)
                                         for item in listadecompras:
                                             print("%s: %s %d valor: R$ %.2f\n" % (item[0], item[1], item[2], item[3]))
                                             print("TOTAL: R$%.2f" % total)
-                                            op = input("Novo Item? (S/N): ")
-                                            novavenda = self.valida_yesorno(op)
+                                            op = input("\nNovo Item? (S/N): ")
+                                            while not self.valida_yesorno(op):
+                                                op = input("\nNovo Item? (S/N): ")
+                                            if op.lower() == 's' or op.lower() == 'sim':
+                                                novavenda = True
+                                            else:
+                                                novavenda = False
+                                    # Danado é essa linha de baixo??
+                                    elif op.lower() == 'n' or op.lower() == 'nao' or op.lower() == 'não':
+                                       print("\nATENÇÃO! Venda Cancelada.\n")
+                                       return  2
                                 else:
-                                    print("Quantidade Insuficiente em Estoque! Impossível Vender")
-                                    return 0
+                                    preco = quant * valor
+                                    total += preco
+                                    listadecompras.append([produto.codigo, produto.nome, quant, preco])
+                                    for item in listadecompras:
+                                        print("%s: %s %d valor: R$ %.2f\n" % (item[0], item[1], item[2], item[3]))
+                                        print("TOTAL: R$%.2f" % total)
+                                        op = input("Novo Item? (S/N): ")
+                                        novavenda = self.valida_yesorno(op)
+                                break
                             else:
-                                print("Produto Não Cadastrado!")
+                                print("Quantidade Insuficiente em Estoque! Impossível Vender")
+                                return 0
+                        else:
+                            print("Produto Não Cadastrado!")
 
                     op = input("Efetuar Pagamento? (S/N): ")
-                    choice = self.valida_yesorno(op)
-                    if choice:
+                    while not self.valida_yesorno(op):
+                        op = input("\nNovo Item? (S/N): ")
+                    if op.lower() == 's' or op.lower() == 'sim':
+                        op = True
+                    else:
+                        op = False
+                    #choice = self.valida_yesorno(op)
+                    if op:
                         self.pagamento(total, listadecompras, fornecedor)
+                        produto.quantidade += quant
+                        e.save_produtos()
                         break
                     else:
-                        print("Venda Cancelada!")
+                        print("\nATENÇÃO! Venda Cancelada.\n")
                         return 1
             else:
-                print("Forncedor Não Cadastrado! Cadastrar? (S/N)")
+                print("\nForncedor Não Cadastrado! Cadastrar? (S/N)")
                 op = input()
-                if self.valida_yesorno(op):
+                while not self.valida_yesorno(op):
+                    op = input("\nCadastrar? (S/N)")
+                if op.lower() == 's' or op.lower() == 'sim':
                     p.novo_fornecedor()
                 else:
                     return 0

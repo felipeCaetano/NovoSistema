@@ -1,4 +1,8 @@
 import re           # expressões regulares
+import os
+import sys
+
+warning = sys.stderr
 
 def valida_opcao(opcao, options):
     if opcao.isdigit() and opcao in options:

@@ -5,10 +5,10 @@ Possui funções definidas na especificação
 """
 
 from clientes import *
-from funcionalidades import valida_cadastro
+import funcionalidades
 import pickle
 
-from src import funcionalidades
+#from src import funcionalidades
 
 
 class Pessoas(object):

@@ -462,7 +462,7 @@ class Funcionario(Pessoa):
                                           cadastro)
         self.__datanasc = datanasc
         self.__login = self.create_login(nome)
-        self.__pass = self.set_password()
+        self.__password = self.set_password()
         self.__gerente = gerente
 
 # metodos exclusivos dos funcinários: Login e Senha
@@ -529,6 +529,18 @@ class Funcionario(Pessoa):
             valor = input("DN(dd/mm/aaaa): ")
         else:
             self.__datanasc = valor
+
+    @property
+    def login(self):
+        return self.__login
+
+    @property
+    def password(self):
+        return self.__password
+
+    @property
+    def gerente(self):
+        return self.__gerente
 
     # Validadores estáticos de Funcionários
     @staticmethod

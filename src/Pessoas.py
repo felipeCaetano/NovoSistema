@@ -23,8 +23,8 @@ class Pessoas(object):
 
     def menu_pessoas(self):
         while True:
-            print(chr(847)*25, "Sistema de Vendas ao Consumidor", chr(847)*25)
-            print(chr(847)*25, "MENU DE PESSOAS".center(31), chr(847)*25, )
+            print(chr(164)*25, "Sistema de Vendas ao Consumidor", chr(164)*25)
+            print(chr(164)*25, "MENU DE PESSOAS".center(31), chr(164)*25, )
             print("Escolha:\n1 - Consultar Cadastro\n2 - Adicionar\n3 - Remover\n4 - Alterar\n0 - SAIR")
             opcao = input()
 
@@ -84,8 +84,8 @@ class Pessoas(object):
     def novo(self):
         while True:
             
-            print(chr(847)*25, "- Sistema de Vendas ao Consumidor -", chr(847)*25)
-            print(chr(847)*25, "- CRIAR NOVO -".center(35), chr(847)*25)
+            print(chr(164)*25, "- Sistema de Vendas ao Consumidor -", chr(164)*25)
+            print(chr(164)*25, "- CRIAR NOVO -".center(35), chr(164)*25)
             print("Escolha:\n1 - Novo Cliente\n2 - Novo Funcionário \n3 - Novo Fornecedor\n0 - SAIR")
             opcao = input()
 
@@ -105,79 +105,79 @@ class Pessoas(object):
                 break
 
     def novo_cliente(self):
-        print(chr(847)*50)
-        print(chr(847), end="")
+        print(chr(164)*50)
+        print(chr(164), end="")
         print("Inisira o CPF - ex. xxx.xxx.xxx-xx")
         cadastro = input("CPF: ")
         while not funcionalidades.valida_cadastro(cadastro):    # Pessoa.valida_cadastro(cadastro):
-            print(chr(847), end="")
+            print(chr(164), end="")
             cadastro = input("CPF: ")
         if len(self.clientes):
             for cliente in self.clientes:
                 if cliente.cadastro == cadastro:
                     print("Cliente Já Cadastrado!")
                     return 0
-        print(chr(847), end="")
+        print(chr(164), end="")
         nome = input("NOME COMPLETO: ")
         while not Pessoa.valida_nome(nome):
-            print(chr(847), end="")
+            print(chr(164), end="")
             nome = input("NOME COMPLETO: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         end = input("ENDEREÇO: ")
         while not Pessoa.valida_endereco(end):
-            print(chr(847), end="")
+            print(chr(164), end="")
             end = input("ENDEREÇO: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         num = input("Nº: ")
         while not Pessoa.valida_numero(num):
-            print(chr(847), end="")
+            print(chr(164), end="")
             num = input("Nº: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         complemento = input("COMPLEMENTO: ")                                      # Complemento não necessita validação?
-        print(chr(847), end="")
+        print(chr(164), end="")
         bairro = input("BAIRRO: ")
         while not Pessoa.valida_bairro(bairro):
-            print(chr(847), end="")
+            print(chr(164), end="")
             bairro = input("BAIRRO: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         cidade = input("CIDADE: ")
         while not Pessoa.valida_cidade(cidade):
-            print(chr(847), end="")
+            print(chr(164), end="")
             cidade = input("CIDADE: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         cep = input("CEP: ")
         while not Pessoa.valida_cep(cep):
-            print(chr(847), end="")
+            print(chr(164), end="")
             cep = input("CEP: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         uf = input("UF: ")
         while not Pessoa.valida_estado(uf):
-            print(chr(847), end="")
+            print(chr(164), end="")
             uf = input("UF: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         tel = input("TELEFONE: ")
         while not Pessoa.valida_telefone(tel):
-            print(chr(847), end="")
+            print(chr(164), end="")
             tel = input("TELEFONE: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         cel = input("CELULAR: ")
         while not Pessoa.valida_celular(cel):
-            print(chr(847), end="")
+            print(chr(164), end="")
             cel = input("CELULAR: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         email = input("EMAIL: ")
         while not Pessoa.valida_email(email):
-            print(chr(847), end="")
+            print(chr(164), end="")
             email = input("EMAIL: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         rg = input("RG: ")
         while not Pessoa.valida_rg(rg):
-            print(chr(847), end="")
+            print(chr(164), end="")
             rg = input("RG: ")
-        print(chr(847), end="")
+        print(chr(164), end="")
         data = input("DATA DE NASCIMENTO(dd/mm/aaaa): ")
         while not Cliente.valida_data(data):
-            print(chr(847), end="")
+            print(chr(164), end="")
             data = input("DATA DE NASCIMENTO: ")
 
         cliente = Cliente(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, data)
@@ -200,6 +200,10 @@ class Pessoas(object):
         gerente = input("Gerente(S/N): ")
         while not Funcionario.valida_status(gerente):
             gerente = input("Gerente(S/N): ")
+        if gerente.lower() == 's' or gerente.lower() == 'sim':
+            gerente = True
+        else:
+            gerente = False
 
         nome = input("NOME COMPLETO: ")
         while not Pessoa.valida_nome(nome):
@@ -248,7 +252,7 @@ class Pessoas(object):
             rg = input("RG: ")
 
         data = input("DATA DE NASCIMENTO(dd/mm/aaaa): ")
-        while not Funcionario.valida_data(data):
+        while not funcionalidades.valida_data(data):
             data = input("DATA DE NASCIMENTO(dd/mm/aaaa): ")
 
         funcionario = Funcionario(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro,
@@ -768,8 +772,8 @@ class Pessoas(object):
                                 del self.clientes[index]
                                 print("Item Removido com Sucesso!")
                                 break
-                            elif cliente.ativo:
-                                print("Impossível remover Cliente Ativo!!")
+                            else:
+                                print("ATENÇÃO! Impossível remover Cliente Ativo")
                         else:
                             print("Cliente não encontrado!\n")
 
@@ -818,8 +822,8 @@ class Pessoas(object):
                 """
         # TODO : Uma forma melhor de exibir na tela as informações
 
-        print(chr(847) * 18, "- Sistema de Vendas ao Consumidor -", chr(847) * 18)
-        print(chr(847) * 25, "- CONSULTAR PESSOAS -", chr(847) * 25)
+        print(chr(164) * 18, "- Sistema de Vendas ao Consumidor -", chr(164) * 18)
+        print(chr(164) * 25, "- CONSULTAR PESSOAS -", chr(164) * 25)
         print("Escolha:\n1- Consultar Clientes\n2- Consultar Fornecedores\n3- Consultar Empregados\n0- SAIR")
         opcao = input()
 

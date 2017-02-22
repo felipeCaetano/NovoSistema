@@ -415,6 +415,7 @@ class Cliente(Pessoa):
     def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc):
         Pessoa.__init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro)
         self.__datanasc = datanasc
+        self.ativo = False
 
     @property
     def datanasc(self):

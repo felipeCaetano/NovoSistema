@@ -45,16 +45,16 @@ class Estoque(object):
         Cria uma categoria através dos dados recolhidos pelo formulário.
         Os dados são: Codigo, nome e descrição
         """
-        print(chr(847)*71)
-        print(chr(847)*25, "- CRIAR CATEGORIA -", chr(847)*25)
-        print(chr(847) * 71)
-        print("\n", chr(847), " ", end="")
+        print(chr(164)*71)
+        print(chr(164)*25, "- CRIAR CATEGORIA -", chr(164)*25)
+        print(chr(164) * 71)
+        print("\n", chr(164), " ", end="")
         codigo = input("CÓDIGO: ").strip()
-        print("\n", chr(847), " ", end="")
+        print("\n", chr(164), " ", end="")
         nome = input("NOME: ").strip()
-        print("\n", chr(847), " ", end="")
+        print("\n", chr(164), " ", end="")
         descrição = input("DESCRIÇÃO: ").strip()
-        print("\n", chr(847), " ", end="")
+        print("\n", chr(164), " ", end="")
         categoria = Categoria(codigo, nome, descrição)
         if categoria not in self.categorias:
             self.categorias.append(categoria)
@@ -68,18 +68,18 @@ class Estoque(object):
         Cria uma categoria através dos dados recolhidos pelo formulário.
         Os dados são: Codigo, nome e descrição e a passagem de um objeto categoria
         """
-        print(chr(847)*25, "- CRIAR SUBCATEGORIA -", chr(847)*25)
+        print(chr(164)*25, "- CRIAR SUBCATEGORIA -", chr(164)*25)
         if len(self.categorias) == 0:
             print("Não há categorias registradas!\nVocê deve criar pelo menos uma CATEGORIA!\n")
             # self.create_categoria()
             return 1
-        print("\n", chr(847), " ", end="")
+        print("\n", chr(164), " ", end="")
         codigo = input("CÓDIGO: ").strip()
-        print("\n", chr(847), " ", end="")
+        print("\n", chr(164), " ", end="")
         nome = input("NOME: ").strip()
-        print("\n", chr(847), " ", end="")
+        print("\n", chr(164), " ", end="")
         descrição = input("DESCRIÇÃO: ").strip()
-        print("\n", chr(847), " ", end="")
+        print("\n", chr(164), " ", end="")
         escolhe = input("CATEGORIA (Nome ou Código): ")
 
         for cat in self.categorias:
@@ -117,46 +117,46 @@ class Estoque(object):
             print("Produto deve ter CATEGORIA ou uma SUBCATEGORIA!\n")
             self.create_subcategoria()
         else:
-            print(chr(847)*25, "- Cadastrar PRODUTO -", chr(847)*25)
-            print("\n", chr(847), " ", end="")
+            print(chr(164)*25, "- Cadastrar PRODUTO -", chr(164)*25)
+            print("\n", chr(164), " ", end="")
             escolhe = input("SUBCATEGORIA (Nome ou Código): ").lower()
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             codigo = input("CÓDIGO: ").strip()
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             nome = input("NOME: ").strip()
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             descricao = input("DESCRIÇÃO: ").strip()
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             estoquemax = input("Quantidade Maxima em Estoque: ")
             while not Produtos.valida_estoque(estoquemax):
                 print("Valor Inválido!")
                 estoquemax = input("Valor deve ser Numérico: ")
             estoquemax = int(estoquemax)
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             estoquemin = input("Quantidade Minima em Estoque: ")
             while not Produtos.valida_estoque(estoquemin):
                 print("Valor Inválido!")
                 estoquemin = input("Valor deve ser Numérico: ")
             estoquemin = int(estoquemin)
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             quantidade = input("Quantidade Atual em Estoque: ")
             while not Produtos.valida_estoque(quantidade):
                 print("Valor Inválido!")
                 quantidade = input("Valor deve ser Numérico: ")
             quantidade = int(quantidade)
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             valorvenda = input("Preço Unitário: ")
             while not Produtos.valida_valorvenda(valorvenda):
                 print("Valor Inválido!")
                 valorvenda = input("Valor deve ser Numérico: ")
             valorvenda = float(valorvenda.replace(",", "."))
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             valorcompra = input("Valor de Compra: ")
             while not Produtos.valida_valorvenda(valorcompra):
                 print("Valor Inválido!")
                 valorcompra = input("Valor deve ser Numérico: ")
             valorcompra = float(valorcompra.replace(",", "."))
-            print("\n", chr(847), " ", end="")
+            print("\n", chr(164), " ", end="")
             foto = input("Arquivo de foto: ")                  # a ideia é receber um objeto file para arquivos de fotos
             # TODO: Criar codigo para tratar imagens
 
@@ -196,8 +196,7 @@ class Estoque(object):
             # print("\n**********Lista de Produtos com estoque abaixo do Minimo: **********")
             for produto in self.produtos:
                 if produto.quantidade <= produto.estoquemin:
-                    pr1int("\n\n -ATENÇÃO!")
-                    print("%s em quantidade baixa! Abaixo de %d\n\n" % (produto.nome, produto.estoquemin))
+                    print("\n\nATENÇÃO! %s em quantidade baixa! Abaixo de %d\n\n" % (produto.nome, produto.estoquemin))
 
     def consulta_estoque(self):                                                     # exibe itens disponiveis no estoque
         """"
@@ -208,8 +207,8 @@ class Estoque(object):
             >Lista de Produtos Registrados
         """
 
-        print(chr(847) * 18, "- Sistema de Vendas ao Consumidor -", chr(847) * 18)
-        print(chr(847) * 25, "- CONSULTAR ESTOQUE -", chr(847) * 25)
+        print(chr(164) * 18, "- Sistema de Vendas ao Consumidor -", chr(164) * 18)
+        print(chr(164) * 25, "- CONSULTAR ESTOQUE -", chr(164) * 25)
         print("Escolha:\n1- Consultar Produtos\n2- Consultar Categoria\n3- Consultar Sub-Categoria\n0- SAIR")
         opcao = input()
 
@@ -257,9 +256,9 @@ class Estoque(object):
         :return: objeto escolhido alterado.
         """
         while True:
-            print(chr(847)*15, "Escolha o Item que deseja ALTERAR", chr(847)*15)
-            print(chr(847), "1- Alterar uma categoria\n", chr(847), "2- Alterar uma Subcategoria\n", chr(847),
-                  "3- Alterar um produto\n", chr(847), "0 - SAIR")
+            print(chr(164)*15, "Escolha o Item que deseja ALTERAR", chr(164)*15)
+            print(chr(164), "1- Alterar uma categoria\n", chr(164), "2- Alterar uma Subcategoria\n", chr(164),
+                  "3- Alterar um produto\n", chr(164), "0 - SAIR")
             opcao = input()
 
             while not self.valida_opcao(opcao, "0123"):
@@ -380,7 +379,7 @@ class Estoque(object):
 
             opcao = input()
 
-            while not self.valida_opcao(opcao, "0123"):
+            while not funcionalidades.valida_opcao(opcao, "0123"):
                 print("Opção Inválida!")
                 opcao = input()
 
@@ -427,11 +426,14 @@ class Estoque(object):
                     opcao = input("\nDigite Código Escolhido: ")
                     for produto in self.produtos:
                         if produto.codigo == opcao:
-                            index = self.produtos.index(produto)
-                            del self.produtos[index]
-                            print("\nProduto Removido com Sucesso!!")
-                            self.save_produtos()
-                            break
+                            if not produto.ativo:
+                                index = self.produtos.index(produto)
+                                del self.produtos[index]
+                                print("\nProduto Removido com Sucesso!!\n")
+                                self.save_produtos()
+                                break
+                            else:
+                                print("ATENÇÃO! Produto já negociado não pode ser removido", file=funcionalidades.warning)
                         else:
                             print("Codigo não encontrado!\n")
             elif opcao == '0':
@@ -440,7 +442,7 @@ class Estoque(object):
     def adiciona_item(self):     # adiciona novo item ao estoque
         print("Adicionando item ao estoque")
         while 1:
-            print(chr(847)*25, "- Menu Adicionar -", chr(847)*25)
+            print(chr(164)*25, "- Menu Adicionar -", chr(164)*25)
             print("\n1 - Adicionar Categoria\n2 - Adicionar Subcategoria\n3 - Adicionar Produtos\n0 - Sair")
             opcao = input()
             while not self.valida_opcao(opcao, "0123"):
@@ -456,11 +458,12 @@ class Estoque(object):
                 break
 
     def menu_estoque(self):
+        print("\n"*10)
         while True:
-            print(chr(847) * 79)
+            print(chr(164) * 79)
             print("Sistema de Vendas ao Consumidor".center(80))
-            print(chr(847) * 79)
-            print(chr(847) * 29, "- MENU DE ESTOQUE -", chr(847) * 29)
+            print(chr(164) * 79)
+            print(chr(164) * 29, "- MENU DE ESTOQUE -", chr(164) * 29)
             print("\n1 - Consultar Estoque\n2 - Adicionar\n3 - Remover\n4 - Alterar\n0 - SAIR")
             opcao = input()
 

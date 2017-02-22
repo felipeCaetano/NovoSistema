@@ -79,6 +79,7 @@ class Produtos(object):
         self._quantidade = quantidade
         self._vbvenda = valorvenda
         self._vbcompra = valorcompra
+        self.ativo = False
 
 # properties
 

@@ -1,6 +1,6 @@
 import re           # expressões regulares
-import os
 import sys
+from datetime import datetime
 
 warning = sys.stderr
 
@@ -95,7 +95,6 @@ def valida_cadastro(cadastro):
         print("CPF/CNPJ Inválido! -> Verifique a quantidade de Dígitos")
         return False  # maior ou menor q 11 n vale 012923084-78
 
-
 def valida_endereco (endereco):
     if endereco == "":
         return True
@@ -110,7 +109,6 @@ def valida_endereco (endereco):
     else:
         return True
 
-
 def valida_bairro ( bairro ):
     if bairro == "":
         return True
@@ -121,7 +119,6 @@ def valida_bairro ( bairro ):
         return False
     else:
         return True
-
 
 def valida_cidade ( cidade ):
     if cidade == "":
@@ -171,6 +168,25 @@ def valida_telefone(telefone):
         print("A regex tá errada")
         return False
 
+
+def valida_data ( data ):
+    year = datetime.now().year
+
+    s = data.replace("/", "")
+    if data == "":
+        return data
+    else:
+        if int(s[0:2]) > 31:
+            return False
+        if int(s[2:4]) > 12:
+            return False
+        # TODO:se ano maior q ano atual tb deve retornar False
+        if int(s[4:8]) > int(year):
+            return False
+        if len(s) == 8 and s.isdigit():
+            return True
+        else:
+            return False
 
 def remove_caracter(dado):
     '''

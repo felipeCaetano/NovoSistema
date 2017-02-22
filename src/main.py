@@ -35,19 +35,22 @@ def get_weekday():
     print(today, end="\n")
 
 
-def main_menu(vendas, estoque, pessoas, acess = True):
-    os.system("clear")
+def main_menu(vendas, estoque, pessoas, acess, nome, cargo):
+    os.system("cls")
     while 1:
         print(chr(164) * 18, "- SISTEMA DE VENDA AO CONSUMIDOR -", chr(164) * 18)
         print("Nome:",(Loja.fantasia).ljust(1), end="")
         print("CNPJ: ".rjust(40),(Loja.cadastro))
+
         get_weekday()
+        print("Usuário:" , nome.ljust(15), end=" ")
+        print("Acesso: ".rjust(52-(len(nome)+8)), cargo)
         print(chr(164) * 18, "- MENU INICIAL -".center(34), chr(164) * 18)
         # pegando a data:
 
-        print("\nESCOLHA A FUNÇÃO:\n1- VENDER\t\t\t\t\t\t5- CONTROLE DE PESSOAL\n2- COMPRAR\t\t\t\t\t\t"
-              "6- CONTROLE DE ESTOQUE\n3- RELATORIO DE VENDAS\t\t\t7- LOJA\n4- RELATORIO DE COMPRAS\t\t\t8- AJUDA\n"
-              "0- SAIR")
+        print("\nESCOLHA A FUNÇÃO:\n1- VENDER","5- CONTROLE DE PESSOAL".rjust(60),"\n2- COMPRAR",
+              "6- CONTROLE DE ESTOQUE".rjust(59),"\n3- RELATORIO DE VENDAS","7- LOJA".rjust(32),
+              "\n4- RELATORIO DE COMPRAS","8- AJUDA".rjust(32),"\n0- SAIR")
         op = input()
         while not valida_opcao(op, "012345678"):
             print("Opção Inválida!\n")
@@ -56,6 +59,7 @@ def main_menu(vendas, estoque, pessoas, acess = True):
         if op == 1:
             vendas.vender(estoque, pessoas)
         elif op == 0:
+            os.system('cls')
             break
 
         if acess:
@@ -73,22 +77,32 @@ def main_menu(vendas, estoque, pessoas, acess = True):
             print("Menu Indisponível! -> Você não tem privilégios suficientes.")
 
 def login(pessoas):
+    cargo =""
+    os.system("cls")
     print(chr(164) * 18, "Tela de LOGIN:", chr(164) * 18)
     while 1:
         username = input("USUÁRIO: ")
         password = getpass.getpass("SENHA: ")
 
         if username == "admin" and password == "admin":
-            return True
+            return (True, "Administrador", "Administrador")
         else:
             for funcionario in pessoas.funcionarios:
+                print("Verificando nivel de acesso para %s" % funcionario.nome)
+                print("%s" % funcionario.gerente)
                 if funcionario.login == username:
                     if funcionario.password == password:
                         acess = funcionario.gerente
-                        return acess
+                    if acess:
+                        cargo = "Gerente"
+                    else:
+                        cargo = "Funcionário"
+
+                    return (acess, funcionario.nome, cargo)
             else:
                 print("ATENÇÃO! Usuário/Senha Inválido.", file = warning)
-
+    print("\n"*4)
+    print(chr(164)*54)
 
 
 def main():
@@ -98,8 +112,8 @@ def main():
     p = Pessoas()
 
     # TODO: Chamar login e senha do usuário do sistema
-    acess = login(p)
-    main_menu(v, e, p)  # colocar atributo de acesso.
+    acess, nome, cargo = login(p)
+    main_menu(v, e, p, acess, nome, cargo)  # colocar atributo de acesso.
 
 if __name__ == "__main__":
     main()

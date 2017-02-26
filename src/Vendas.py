@@ -19,7 +19,11 @@ Para vendas:
     Modulo de vendas também gera relatório de compra/venda
 """
 import sys
+import os
 import pickle
+import time
+
+from Loja import *
 from Estoque import *
 from Pessoas import *
 
@@ -47,7 +51,10 @@ class Vendas(object):
 
     def menu_vendas(self, estoque, pessoas):
         while True:
-            print(chr(164)*25, "- Sistema de Vendas ao Consumidor -", chr(164)*25)
+            print(chr(164) * 18, "- SISTEMA DE VENDA AO CONSUMIDOR -", chr(164) * 18)
+            print("Nome:", Loja.fantasia.ljust(1), end="")
+            print("CNPJ: ".rjust(40), (Loja.cadastro))
+            funcionalidades.get_weekday()
             print(chr(164)*25, "- MENU DE VENDAS -", chr(164)*25)
             print("Escolha:\n1- Iniciar Venda\n2- Iniciar Compra\n3- Relatorio de Vendas\n"
                   "4- Relatorio de Compras\n0- SAIR")
@@ -88,8 +95,10 @@ class Vendas(object):
         total = 0
 
         novavenda = True
+        os.system('cls')
         if not len(e.produtos) or not len(p.clientes):
             print("Lista de Produtos ou Clientes Vazia! Necessita cadastrar\n")
+            time.sleep(3)
             return 0
         else:
             print(chr(164)*80)

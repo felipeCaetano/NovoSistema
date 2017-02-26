@@ -179,8 +179,9 @@ class Pessoas(object):
         while not Cliente.valida_data(data):
             print(chr(164), end="")
             data = input("DATA DE NASCIMENTO: ")
+        foto = input("Arquivo de Foto: ")
 
-        cliente = Cliente(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, data)
+        cliente = Cliente(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, data, foto)
 
         if cliente not in self.clientes:
             self.clientes.append(cliente)
@@ -331,7 +332,6 @@ class Pessoas(object):
         :return: objeto alterado
         """
         # Alterar copiado da Classe Estoque
-        # TODO: Modificar para se adequar aos objetos manipulados por essa classe
 
         while 1:
             print("Escolha o Item que deseja ALTERAR")
@@ -820,7 +820,6 @@ class Pessoas(object):
                     >Lista de funcionários
                     >Lista de fornecedores
                 """
-        # TODO : Uma forma melhor de exibir na tela as informações
 
         print(chr(164) * 18, "- Sistema de Vendas ao Consumidor -", chr(164) * 18)
         print(chr(164) * 25, "- CONSULTAR PESSOAS -", chr(164) * 25)
@@ -839,7 +838,7 @@ class Pessoas(object):
                     print("\nCLIENTES CADASTRADOS")
                     print("CPF", "NOME:".rjust(15), "TELEFONE".rjust(35), "EMAIL".rjust(15))
                     for cliente in self.clientes:
-                        print(cliente.cadastro, cliente.nome.rjust(13), cliente.telefone.rjust(33),
+                        print(cliente.cadastro, cliente.nome.rjust(15), cliente.telefone.rjust(33),
                               cliente.email.rjust(27))
                     break
             elif opcao == '3':

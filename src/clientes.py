@@ -439,7 +439,8 @@ class Cliente(Pessoa):
                 return False
             if int(s[2:4]) > 12:
                 return False
-            # TODO:se ano maior q ano atual tb deve retornar False
+            # TODO:se ano maior q ano atual tb deve retornar False - Testar em funcionalidades
+
             if len(s) == 8 and s.isdigit():
                 return True
             else:
@@ -454,17 +455,17 @@ class Fornecedor(Pessoa):
 
 
 class Funcionario(Pessoa):
-    # TODO: cliente tem foto
     logins_list = []
 
     def __init__(self, nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg, cadastro, datanasc,
-                 gerente):
+                 gerente, foto):
         super(Funcionario, self).__init__(nome, end, num, complemento, bairro, cidade, cep, uf, tel, cel, email, rg,
                                           cadastro)
         self.__datanasc = datanasc
         self.__login = self.create_login(nome)
         self.__password = self.set_password()
         self.__gerente = gerente
+        self.__foto = foto
 
 # metodos exclusivos dos funcinários: Login e Senha
 
@@ -503,7 +504,7 @@ class Funcionario(Pessoa):
 
         :return: senha do usuário
         """
-        # TODO: Colocar modulo de senha do python
+
         senha1 = ""
         while not len(senha1) == 8:
             print("Defina sua SENHA com 8 caracteres:\n")

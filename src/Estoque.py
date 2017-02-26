@@ -1,3 +1,5 @@
+import os
+import funcionalidades
 from produtos import *
 import pickle
 
@@ -60,6 +62,7 @@ class Estoque(object):
             self.categorias.append(categoria)
             self.save_categoria()
             print("Categoria Adicionada com sucesso!\n")
+            return categoria.nome
         else:
             print("Categoria ou Código já existente\n")
 
@@ -83,20 +86,20 @@ class Estoque(object):
         escolhe = input("CATEGORIA (Nome ou Código): ")
 
         for cat in self.categorias:
+
             if cat.nome == escolhe or cat.codigo == escolhe:
-                categoria = cat
+                print(cat.nome, cat.codigo, escolhe)
+                categoria = cat.nome
                 subcategoria = Subcategoria(categoria, codigo, nome, descrição)
                 break
-            else:
-                print("Categoria não Encontrada!\nVocê deve criar uma CATEGORIA!")
-                print("\nDeseja Criar um Subcategoria? (1- Sim /2- Não)")
-                opcao = input()
-                if opcao.strip() == '1' or opcao.lower() == 'sim' or opcao.lower() == 's':
-                    newcat = self.create_categoria()
-                    subcategoria = Subcategoria(newcat, codigo, nome, descrição)
-                    break
-                else:
-                    break
+        else:
+            print(cat.nome, cat.codigo, escolhe)
+            print("ATENÇÃO! Categoria não Encontrada.\nVocê deve criar uma CATEGORIA!")
+            print("\nDeseja Criar uma Categoria? (S/N)")
+            opcao = input()
+            if opcao.strip() == '1' or opcao.lower() == 'sim' or opcao.lower() == 's':
+                newcat = self.create_categoria()
+                subcategoria = Subcategoria(newcat, codigo, nome, descrição)
 
         if subcategoria not in self.subcategorias:
             self.subcategorias.append(subcategoria)
@@ -458,7 +461,7 @@ class Estoque(object):
                 break
 
     def menu_estoque(self):
-        print("\n"*10)
+        os.system('cls')
         while True:
             print(chr(164) * 79)
             print("Sistema de Vendas ao Consumidor".center(80))

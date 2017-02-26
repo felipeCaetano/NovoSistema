@@ -3,46 +3,21 @@ import os
 import getpass
 from datetime import datetime
 
-from funcionalidades import valida_opcao
-from funcionalidades import warning
+import funcionalidades
 from Vendas import Vendas
-
 from Estoque import Estoque
-
 from Pessoas import Pessoas
 from Loja import *
-
-
-def get_weekday():
-    today = datetime.now().strftime("%d/%m/%Y - %H:%M")
-    dia = datetime.now().weekday()
-
-    if dia == 6:
-        print("Domingo, ", end="")
-    elif dia == 0:
-        print("Segunda-feira, ", end="")
-    elif dia == 1:
-        print("Terça-feira, ", end="")
-    elif dia == 2:
-        print("Quarta-feira, ", end="")
-    elif dia == 3:
-        print("Quinta-feira, ", end="")
-    elif dia == 4:
-        print("Sexta-feira, ", end="")
-    elif dia == 5:
-        print("Sábado, ", end="")
-
-    print(today, end="\n")
 
 
 def main_menu(vendas, estoque, pessoas, acess, nome, cargo):
     os.system("cls")
     while 1:
         print(chr(164) * 18, "- SISTEMA DE VENDA AO CONSUMIDOR -", chr(164) * 18)
-        print("Nome:",(Loja.fantasia).ljust(1), end="")
+        print("Nome:",Loja.fantasia.ljust(1), end="")
         print("CNPJ: ".rjust(40),(Loja.cadastro))
 
-        get_weekday()
+        funcionalidades.get_weekday()
         print("Usuário:" , nome.ljust(15), end=" ")
         print("Acesso: ".rjust(52-(len(nome)+8)), cargo)
         print(chr(164) * 18, "- MENU INICIAL -".center(34), chr(164) * 18)
@@ -52,7 +27,7 @@ def main_menu(vendas, estoque, pessoas, acess, nome, cargo):
               "6- CONTROLE DE ESTOQUE".rjust(59),"\n3- RELATORIO DE VENDAS","7- LOJA".rjust(32),
               "\n4- RELATORIO DE COMPRAS","8- AJUDA".rjust(32),"\n0- SAIR")
         op = input()
-        while not valida_opcao(op, "012345678"):
+        while not funcionalidades.valida_opcao(op, "012345678"):
             print("Opção Inválida!\n")
             op = input()
         op = int(op)
@@ -93,17 +68,14 @@ def login(pessoas):
                 if funcionario.login == username:
                     if funcionario.password == password:
                         acess = funcionario.gerente
-                    if acess:
-                        cargo = "Gerente"
-                    else:
-                        cargo = "Funcionário"
+                        if acess:
+                            cargo = "Gerente"
+                        else:
+                            cargo = "Funcionário"
 
                     return (acess, funcionario.nome, cargo)
             else:
                 print("ATENÇÃO! Usuário/Senha Inválido.", file = warning)
-    print("\n"*4)
-    print(chr(164)*54)
-
 
 def main():
 
@@ -111,7 +83,6 @@ def main():
     e = Estoque()
     p = Pessoas()
 
-    # TODO: Chamar login e senha do usuário do sistema
     acess, nome, cargo = login(p)
     main_menu(v, e, p, acess, nome, cargo)  # colocar atributo de acesso.
 

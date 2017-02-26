@@ -1,7 +1,7 @@
 class Categoria(object):
     def __init__(self, codigo, nome, descricao):
         self._codigo = codigo
-        self._nome = nome
+        self.nome = nome
         self._descricao = descricao
 
     @property
@@ -58,7 +58,7 @@ class Subcategoria(Categoria):
         self.descricao = descricao
 
     def __str__(self):
-        return "{0}\t\t{1}\t\t{2}\t\t{3}".format(self.codigo, self.nome, self.cat.nome, self._descricao)
+        return "{0}\t\t{1}\t\t{2}".format(self.codigo, self.nome, self.descricao)
 
 
 class Produtos(object):
@@ -206,6 +206,16 @@ class Produtos(object):
     def quantidade(self):
         del self._quantidade
 
+    @property
+    def subcategoria(self):
+        return self._sub
+
+    @subcategoria.setter
+    def subcategoria(self, value):
+        pass
+
+
+
 # validadores
     @staticmethod
     def valida_estoque(value):
@@ -243,5 +253,12 @@ class Produtos(object):
                 return False
 
     def __str__(self):
-        # TODO: Implementar forma padrão de visualizaç
-        return str(self.__dict__)
+        # TODO: Implementar forma padrão de visualização
+        saida = []
+        print("Nome:",self.nome) #__dict__[_nome])
+        #print("Categoria:", self.subcategoria) #__dict__[_sub][2])
+        #print("SubCategoria:", self.__dict__[_sub][1])
+        print("Descrição:", self.descricao)
+        print("Quantidade:", self.quantidade)
+        print("Valor:", self.vbvenda)
+        return ""

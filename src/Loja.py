@@ -5,6 +5,7 @@ import pickle
 class Loja(object):
     def __init__(self, cadastro, razao, fantasia, endereco, cidade, bairro,  cep, uf, email, url, logo,
                    telefone):
+        self.__fatansia = fantasia
         self.__cadastro = cadastro
         self.__razao = razao
         self.__endereco = endereco
@@ -15,7 +16,7 @@ class Loja(object):
         self.__email = email
         self.__url = url
         self.__cidade = cidade
-        self.__fantasia = fantasia
+        #self._fantasia = fantasia
         self.__telefone = telefone
         self.save()
 
@@ -28,22 +29,21 @@ class Loja(object):
             with open('loja.vdc', 'rb') as lojaconfig:
                 self.loja = pickle.load(lojaconfig)
         except FileNotFoundError:
-            print("Loja precisa ser configurada")
+            print("ATENÇÃO! Loja precisa ser configurada")
 
             # metodos getters e setters
 
     @property
-    def fantasia ( self ):
+    def fantasia(self):
         return self.__fantasia
 
     @fantasia.setter
-    def fantasia ( self, valor ):
+    def fantasia(self, valor):
         while not funcionalidades.valida_nome(valor):
             print("Nome Fantasia Inválido!")
             print(chr(847), end='')
             valor = input("Nome Fantasia: ")
-        else:
-            self.__fatansia = valor
+        self.__fantasia = valor
 
         # @property
         # def endereco ( self ):
